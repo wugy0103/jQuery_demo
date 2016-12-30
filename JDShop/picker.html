@@ -6,11 +6,12 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <title></title>
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_erxl81vab5k4kj4i.css"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_eu6jorv19d4pldi.css"/>
     <style>
         * {
             padding: 0;
             margin: 0;
+            box-sizing: border-box;
         }
         /*20161230京东*/
         .mui-backdrop {
@@ -273,6 +274,7 @@
         }
         .hasJDaddress {
             max-width: 768px;
+            height: 300px;
         }
         .hasJDaddress .hasJDaddress-header {
             width: 100%;
@@ -286,6 +288,47 @@
         }
         .hasJDaddress .icon-quxiao {
             margin-right: 15px;
+        }
+        .hasJDaddress-list {
+            width: 100%;
+            padding: 0 10px;
+            height: 212px;
+            overflow-y: auto;
+        }
+        .hasJDaddress-list li {
+            padding:10px 0 ;
+            font-family:"if" !important;
+            font-style:normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 14px;
+            color: #888888;
+            border-bottom: 1px solid #ddd;
+        }
+        .hasJDaddress-list li::before { content: "\e600"; font-size: 16px;}
+        .hasJDaddress-active::after { content: "\e602"; font-size: 20px;
+            position: absolute;
+            right: 0;
+            top: 8px;}
+        .hasJDaddress-active::before {
+            color: #ff5555 !important;
+        }
+        .hasJDaddress-active {
+            color: #33c774 !important;
+            position: relative;
+            padding-right: 15px !important;
+        }
+        .hasJDaddress-footer {
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff5555;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
         }
     </style>
 </head>
@@ -309,7 +352,7 @@
         <i class="if icon-quxiao fr"></i>
     </div>
     <ul class="hasJDaddress-list">
-        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li class="hasJDaddress-active">广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
         <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
         <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
         <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
@@ -322,21 +365,9 @@
         <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
 
     </ul>
-    <!--<div class="mui-poppicker-header">-->
-        <!--<button class="mui-btn mui-poppicker-btn-cancel if icon-quxiao"></button>-->
-        <!--<span>配送至</span>-->
-        <!--<button class="mui-btn mui-btn-blue mui-poppicker-btn-ok if icon-queding"></button>-->
-        <!--<div class="mui-poppicker-clear"></div>-->
-    <!--</div>-->
-    <!--<div class="mui-poppicker-body">-->
-        <!--<ul class="JDaddress-list">-->
-            <!--<li class="if icon-dingwei">广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
-            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
-            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
-            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
-            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
-        <!--</ul>-->
-    <!--</div>-->
+    <div class="hasJDaddress-footer">
+        选择其他地址
+    </div>
 </div>
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="js/mui.min.js"></script>
