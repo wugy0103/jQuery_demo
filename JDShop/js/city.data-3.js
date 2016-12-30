@@ -5,6 +5,7 @@ var cityData = [{
 		value: "110101",
 		text: "北京市",
 		children: [{
+			children:null,
 			value: "110101",
 			text: "东城区"
 		}, {

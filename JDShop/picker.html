@@ -8,13 +8,11 @@
     <title></title>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_erxl81vab5k4kj4i.css"/>
     <style>
-
-        /*20161230京东*/
         * {
             padding: 0;
             margin: 0;
         }
-
+        /*20161230京东*/
         .mui-backdrop {
             position: fixed;
             z-index: 998;
@@ -173,11 +171,7 @@
             position: relative;
             width: 100%;
             height: 200px;
-            border-top: solid 1px #ddd;
-            /*-webkit-perspective: 1200px;
-            perspective: 1200px;
-            -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;*/
+
         }
 
         .mui-poppicker-body .mui-picker {
@@ -203,7 +197,7 @@
             font-size: 14px;
             color: #888888;
             letter-spacing: 0;
-            line-height: 14px;
+            line-height: 22px;
         }
 
         .fl {
@@ -232,17 +226,25 @@
             font-size: 14px;
             color: #333333;
             letter-spacing: 0;
-            line-height: 14px;
+            line-height: 22px;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-left:58px;
+            margin-right:16px;
         }
 
         .icon-gengduo {
             font-size: 14px;
             color: #ccc;
-            margin-right: 5px;
+            margin-left:-16px;
         }
-
+        .shuangfeiyi{
+            width:100%;
+        }
+        .shuangfeiyi-left {
+            margin-left:-100%;
+        }
         .mui-poppicker-header button {
             padding: 0;
             margin: 0;
@@ -269,12 +271,21 @@
             top: 5px;
             right: 5px;
         }
-        .JDaddress-list li {
+        .hasJDaddress {
+            max-width: 768px;
+        }
+        .hasJDaddress .hasJDaddress-header {
+            width: 100%;
+            height: 44px;
+            text-align: center;
             font-family: PingFangSC-Regular;
-            font-size: 13px;
-            color: #33C774;
-            letter-spacing: 0;
-            line-height: 13px;
+            font-size: 18px;
+            color: #888888;
+            letter-spacing: -0.44px;
+            line-height: 44px;
+        }
+        .hasJDaddress .icon-quxiao {
+            margin-right: 15px;
         }
     </style>
 </head>
@@ -283,27 +294,49 @@
 <!--京东 12月30日-->
 <div class="JDaddress" id="JDaddress">
     <div class="clearfix">
-        <div class="fl">
+        <div class="shuangfeiyi fl"><div id='cityResult' class="ui-alert">北京 朝阳区 管庄</div></div>
+        <div class="fl shuangfeiyi-left">
             <span class="fl">送至：</span>
             <i class="if icon-dingwei fl"></i>
         </div>
-        <div id='cityResult' class="ui-alert fl">北京 朝阳区 管庄</div>
-        <i class="if icon-gengduo fr"></i>
+        <i class="if icon-gengduo fl"></i>
     </div>
 </div>
 
-<div class="mui-poppicker " id="hasJDaddress">
-    <div class="mui-poppicker-header">
-        <button class="mui-btn mui-poppicker-btn-cancel if icon-quxiao"></button>
-        <span>配送至</span>
-        <button class="mui-btn mui-btn-blue mui-poppicker-btn-ok if icon-queding"></button>
-        <div class="mui-poppicker-clear"></div>
+<div class="mui-poppicker hasJDaddress" id="hasJDaddress">
+    <div class="hasJDaddress-header">
+        配送至
+        <i class="if icon-quxiao fr"></i>
     </div>
-    <div class="mui-poppicker-body">
-        <ul class="JDaddress-list">
-            <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
-        </ul>
-    </div>
+    <ul class="hasJDaddress-list">
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+        <li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>
+
+    </ul>
+    <!--<div class="mui-poppicker-header">-->
+        <!--<button class="mui-btn mui-poppicker-btn-cancel if icon-quxiao"></button>-->
+        <!--<span>配送至</span>-->
+        <!--<button class="mui-btn mui-btn-blue mui-poppicker-btn-ok if icon-queding"></button>-->
+        <!--<div class="mui-poppicker-clear"></div>-->
+    <!--</div>-->
+    <!--<div class="mui-poppicker-body">-->
+        <!--<ul class="JDaddress-list">-->
+            <!--<li class="if icon-dingwei">广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
+            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
+            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
+            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
+            <!--<li>广东 广州市 天河区 新塘街道思成路宏太智慧谷哈哈</li>-->
+        <!--</ul>-->
+    <!--</div>-->
 </div>
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="js/mui.min.js"></script>
@@ -315,22 +348,29 @@
     $(function () {
         mui.ready(function () {
             var cityPicker = new mui.PopPicker({layer: 3});
-//            $.get("", function (data) {
-//                var cityData = JSON.parse(data);
-//                cityPicker.setData(cityData);
-//            });
-//            cityPicker.setData(cityData);
+            if(!localStorage.JDaddress1230){
+                $.get("/common/loadAreas/getAll", function (data) {
+                    localStorage.JDaddress1230=data;
+                    var cityData = JSON.parse(data).address;
+                    cityPicker.setData(cityData);
+                });
+            }else {
+                var cityData = JSON.parse(localStorage.JDaddress1230).address;
+                cityPicker.setData(cityData);
+            }
+
             var JDaddress = document.getElementById('JDaddress');
             JDaddress.addEventListener('tap', function (event) {
-//                cityPicker.show(function (items) {
-//                    document.getElementById('cityResult').innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
-//                    //返回 false 可以阻止选择框的关闭
-//                    //return false;
-//                });
+                /*cityPicker.show(function (items) {
+                 document.getElementById('cityResult').innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                 //返回 false 可以阻止选择框的关闭
+                 //return false;
+                 });*/
                 $('#hasJDaddress').addClass("mui-active");
             }, false);
         });
     })
+
 
 </script>
 </body>

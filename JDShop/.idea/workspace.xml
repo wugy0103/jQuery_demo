@@ -25,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/js/mui.picker.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="203" column="0" selection-start-line="203" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+              <caret line="380" column="0" selection-start-line="380" selection-start-column="0" selection-end-line="380" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -35,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/js/mui.poppicker.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="52" column="65" selection-start-line="52" selection-start-column="65" selection-end-line="52" selection-end-column="65" />
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding>
                 <marker date="1483088966789" expanded="true" signature="598:714" placeholder="..." />
                 <marker date="1483088966789" expanded="true" signature="598:719" placeholder="..." />
@@ -55,8 +55,8 @@
       <file leaf-file-name="picker.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/picker.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5735462">
-              <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.4732041">
+              <caret line="334" column="21" selection-start-line="334" selection-start-column="21" selection-end-line="334" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -66,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/js/city.data-3.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+              <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -96,8 +96,8 @@
       <list>
         <option value="$USER_HOME$/Desktop/思念 白糯小圆子 500g【图片 价格 品牌 报价】-京东.html" />
         <option value="$PROJECT_DIR$/js/mui.picker.poppicker.min.js" />
-        <option value="$PROJECT_DIR$/js/city.data-3.js" />
         <option value="$PROJECT_DIR$/js/mui.poppicker.js" />
+        <option value="$PROJECT_DIR$/js/city.data-3.js" />
         <option value="$PROJECT_DIR$/picker.html" />
       </list>
     </option>
@@ -282,18 +282,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/city.data-3.js">
+    <entry file="file://$PROJECT_DIR$/js/mui.picker.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+          <caret line="380" column="0" selection-start-line="380" selection-start-column="0" selection-end-line="380" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/mui.picker.js">
+    <entry file="file://$PROJECT_DIR$/js/city.data-3.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="203" column="0" selection-start-line="203" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -301,7 +301,7 @@
     <entry file="file://$PROJECT_DIR$/js/mui.poppicker.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="65" selection-start-line="52" selection-start-column="65" selection-end-line="52" selection-end-column="65" />
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding>
             <marker date="1483088966789" expanded="true" signature="598:714" placeholder="..." />
             <marker date="1483088966789" expanded="true" signature="598:719" placeholder="..." />
@@ -319,8 +319,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/picker.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5735462">
-          <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.4732041">
+          <caret line="334" column="21" selection-start-line="334" selection-start-column="21" selection-end-line="334" selection-end-column="21" />
           <folding />
         </state>
       </provider>
