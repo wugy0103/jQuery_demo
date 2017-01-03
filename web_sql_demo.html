@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //创建数据库
+    var db = openDatabase("users", "1.0", "用户表", 1024 * 1024);
+    if(!db){
+        alert("Failed to connect to database.");
+    } else {
+        alert("connect to database 'K'.");
+    }
+
+    // 创建表
+    db.transaction( function(tx) {
+        tx.executeSql(
+                "CREATE TABLE IF NOT EXISTS users (id REAL UNIQUE, name TEXT)",
+                [],
+                function(){ alert('创建users表成功'); },
+                function(tx, error){ alert('创建users表失败:' + error.message); }
+        );
+    });
+
+    // 插入数据
+    db.transaction(function(tx) {
+        tx.executeSql(
+                "INSERT INTO users (id, name) values(?, ?)",
+                [Math.random(), 'space'],
+                function(){ alert('插入数据成功'); },
+                function(tx, error){ alert('插入数据失败: ' + error.message);}
+        );
+    });
+
+    // 查询
+    db.transaction( function(tx) {
+        tx.executeSql(
+                "SELECT * FROM users", [],
+                function(tx, result) {
+                    var rows = result.rows, length = rows.length, i=0;
+                    for(i; i < length; i++) {
+                        alert(
+                                'id=' + rows.item(i)['id'] +
+                                'name='+ rows.item(i)['name']
+                        );
+                    }
+                },
+                function(tx, error){
+                    alert('Select Failed: ' + error.message);
+                }
+        );
+    });
+
+  /* // 删除表
+    db.transaction(function (tx) {
+        tx.executeSql('DROP TABLE users');
+    });*/
+</script>
+</body>
+</html>
