@@ -330,6 +330,29 @@
             bottom: 0;
             left: 0;
         }
+        .nogoods-word {
+            color: #ff5555;
+            font-size: 14px;
+            line-height: 25px;
+            margin-left: 55px;
+            margin-bottom: -10px;
+            font-weight: bold;
+        }
+        .nogoods-tip {
+            height: 35px;
+            width: 100%;
+            opacity: 0.89;
+            background: #33C774;
+            font-size: 14px;
+            color: #FFFFFF;
+            line-height: 35px;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            bottom: 51px;
+            max-width: 768px;
+            visibility: hidden;
+        }
     </style>
 </head>
 
@@ -344,8 +367,10 @@
         </div>
         <i class="if icon-gengduo fl"></i>
     </div>
-</div>
+    <div class="nogoods-word" >无货</div>
 
+</div>
+<div class="nogoods-tip">所选地区暂时无货，非常抱歉！</div>
 <div class="mui-poppicker hasJDaddress" id="hasJDaddress">
     <div class="hasJDaddress-header">
         配送至
@@ -407,6 +432,8 @@
 
 
 </script>
+
+
 </body>
 
 </html>
