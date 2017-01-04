@@ -5,6 +5,174 @@
     <title></title>
 </head>
 <body>
+<script>
+    $(function () {
+        if (sessionStorage.getUserAddress0103) {
+            var defAddress = JSON.parse(sessionStorage.getUserAddress0103);
+            for(var k=0;k<defAddress.length;k++){
+                if(defAddress[k].commonAddr=="1"){
+                    $("#cityResult").html(defAddress[k].province + " " + defAddress[k].city + " " + defAddress[k].area + " " + defAddress[k].subAdds);
+                }
+            }
+        }
+        mui.ready(function () {
+//            初始化列
+            var cityPicker = new mui.PopPicker({layer: 3});
+//            设置展现数据
+            if (!localStorage.JDaddress1230) {
+                $.get("/common/loadAreas/getAll", function (data) {
+                    localStorage.JDaddress1230 = data;
+                    var cityData = JSON.parse(data).address;
+                    cityPicker.setData(cityData);
+                });
+            } else {
+                var cityData = JSON.parse(localStorage.JDaddress1230).address;
+                cityPicker.setData(cityData);
+            }
+//            入口点击事件
+            var JDaddress = document.getElementById('JDaddress');
+            JDaddress.addEventListener('tap', function (event) {
+//                获取用户地址
+                if (sessionStorage.getUserAddress0103) {
+                    var obj = JSON.parse(sessionStorage.getUserAddress0103);
+                    dataRebder(obj);
+                } else {
+                    $.get(contextPath + "/common/loadAreas/getUserAddress", function (data) {
+                        var data = JSON.parse(data)
+                        if (!!data.userAddress) {
+                            sessionStorage.getUserAddress0103=JSON.stringify(data.userAddress);
+                            var obj = JSON.parse(sessionStorage.getUserAddress0103);
+                            dataRebder(obj);
+                        } else {
+//                            选择地址
+                            selectAddress();
+                        }
+                    });
+
+
+                }
+            }, false);
+
+
+//            用户地址数据展示
+            function dataRebder(obj){
+//                数据拼接
+                var ulHtml = '';
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].commonAddr == "1") {
+                        ulHtml += "<li class='hasJDaddress-active'>" + obj[i].province + " " + obj[i].city + " " + obj[i].area + " " + obj[i].subAdds + "</li>";
+                    } else {
+                        ulHtml += "<li>" + obj[i].province + " " + obj[i].city + " " + obj[i].area + " " + obj[i].subAdds + "</li>";
+                    }
+
+                }
+                $(".hasJDaddress-list").html(ulHtml);
+//                地址框上滑
+                $('#hasJDaddress').addClass("mui-active");
+//                点击其他地址重新选取地址
+                $(".hasJDaddress-footer").on('tap', function () {
+
+                    $('#hasJDaddress').removeClass("mui-active");
+                    selectAddress();
+                });
+//                点击地址列表
+                $(".hasJDaddress-list").on('tap', function (e) {
+                    debugger;
+                    console.log(e);
+                    $("#cityResult").html(e.target.innerText);
+                    var liIndex;
+                    var listLi = $(this).children();
+                    for (var j = 0; j < listLi.size(); j++) {
+                        obj[j].commonAddr="0";
+                        if (listLi[j] == e.target) {
+                            liIndex = j;
+                            console.log(liIndex);
+                            obj[j].commonAddr="1";
+                        }
+                    }
+//                    检查货存
+                    checkJdProdState(obj,liIndex);
+//                    跟新本地存储
+                    sessionStorage.getUserAddress0103=JSON.stringify(obj);
+//                  地址框下滑
+                    $('#hasJDaddress').removeClass("mui-active");
+                })
+            }
+//           检查货存
+            function checkJdProdState(obj,liIndex){
+                var params = {
+                    prodId: currProdId,
+                    provinceId: obj[liIndex].provinceId,
+                    cityId: obj[liIndex].cityId,
+                    areaId: obj[liIndex].areaId
+                };
+                console.log(params)
+                $.ajax({
+                    type: "POST",
+                    url: contextPath + "/checkJdProdState",
+                    data: params,
+                    success: function (data) {
+                        console.log(data)
+                        var data = JSON.parse(data)
+                        if (data.soldOut == "1") {
+                            $(".nogoods-word").css({display: "block"});
+                            $(".nogoods-tip").css({display: "block"});
+                            $("#btnHtml").addClass("nogoods-btn");
+                        } else {
+                            $(".nogoods-word").css({display: "none"});
+                            $(".nogoods-tip").css({display: "none"});
+                            $("#btnHtml").removeClass("nogoods-btn");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            }
+//            选择地址
+            function selectAddress(){
+                cityPicker.show(function (items) {
+                    document.getElementById('cityResult').innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                    var params = {
+                        prodId: currProdId,
+                        provinceId: items[0].value,
+                        cityId: items[1].value,
+                        areaId: items[2].value
+                    };
+                    console.log(params)
+                    $.ajax({
+                        type: "POST",
+                        url: contextPath + "/checkJdProdState",
+                        data: params,
+                        success: function (data) {
+                            console.log(data)
+                            var data = JSON.parse(data)
+                            if (data.soldOut == "1") {
+                                $(".nogoods-word").css({display: "block"});
+                                $(".nogoods-tip").css({display: "block"});
+                                $("#btnHtml").addClass("nogoods-btn");
+                            } else {
+                                $(".nogoods-word").css({display: "none"});
+                                $(".nogoods-tip").css({display: "none"});
+                                $("#btnHtml").removeClass("nogoods-btn");
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    });
+                });
+            }
+
+//            关闭地址框
+            $("#hasJDaddress i").on('tap', function () {
+                $('#hasJDaddress').removeClass("mui-active");
+            })
+        });
+    })
+</script>
 
 </body>
 </html>

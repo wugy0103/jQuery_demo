@@ -260,12 +260,13 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			var info = document.getElementById("info");
-			document.getElementById("alertBtn").addEventListener('tap', function() {
-				mui.alert('', '你在商品浏览过程中所选择的配送地址与当前收货地址不同，是否去新建一个收货地址。', function() {
+//			document.getElementById("alertBtn").addEventListener('tap', function() {
+				mui.alert('111', '你在商品浏览过程中所选择的配送地址与当前收货地址不同，是否去新建一个收货地址。','21321', function() {
 					info.innerText = '你刚关闭了警告框';
+                    console.log(1);
 				});
-			});
-			document.getElementById("confirmBtn").addEventListener('tap', function() {
+//			});
+//			document.getElementById("confirmBtn").addEventListener('tap', function() {
 				var btnArray = ['取消', '新建'];
 				var popupText ='<ul>\
 				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
@@ -280,11 +281,18 @@
 				mui.confirm(popupText, '你修改了配送地址，是否切换？', btnArray, function(e) {
 					if (e.index == 1) {
 						info.innerText = '确认';
+                        console.log(1);
 					} else {
 						info.innerText = '没有得到你的认可'
 					}
 				})
-			});
+//			});
+//			$('#submitAddress').on('tap', function (e) {
+//				$(this).children().each(function (i) {
+//					$(this).removeClass("address-active");
+//				});
+//				$(e.target).addClass("address-active");
+//			})
 		</script>
 	</body>
 
