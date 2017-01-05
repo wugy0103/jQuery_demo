@@ -7,93 +7,92 @@
 <body>
 <script>
     $(function () {
-        if (sessionStorage.getUserAddress0103) {
-            var defAddress = JSON.parse(sessionStorage.getUserAddress0103);
-            for(var k=0;k<defAddress.length;k++){
-                if(defAddress[k].commonAddr=="1"){
-                    $("#cityResult").html(defAddress[k].province + " " + defAddress[k].city + " " + defAddress[k].area + " " + defAddress[k].subAdds);
-                }
-            }
-        }
+        var addrId;
+        var provinceId='${provinceId}';
+        var cityId='${cityId}';
+        var areaId='${areaId}';
         mui.ready(function () {
 //            初始化列
             var cityPicker = new mui.PopPicker({layer: 3});
 //            设置展现数据
+            var cityData;
             if (!localStorage.JDaddress1230) {
-                $.get("/common/loadAreas/getAll", function (data) {
+                $.get(contextPath + "/common/loadAreas/getAll", function (data) {
                     localStorage.JDaddress1230 = data;
-                    var cityData = JSON.parse(data).address;
+                    cityData = JSON.parse(data).address;
                     cityPicker.setData(cityData);
                 });
             } else {
-                var cityData = JSON.parse(localStorage.JDaddress1230).address;
+                cityData = JSON.parse(localStorage.JDaddress1230).address;
                 cityPicker.setData(cityData);
+            }
+//            根据省市区id三层for循环找出地址
+            var intAddress;
+            for(var n=0;n<cityData.length;n++){
+                var obj1=cityData[n];
+                if(obj1.value==provinceId){
+                    for(var m=0;obj1.children.length;m++){
+                        var obj2=obj1.children[m];
+                        if(obj2.value==cityId){
+                            for(var o=0;obj2.children.length;o++){
+                                var obj3=obj2.children[o];
+                                if(obj3.value==areaId){
+                                    intAddress=obj1.text+" "+obj2.text+" "+obj3.text;
+                                    $('#cityResult').html(intAddress);
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
             }
 //            入口点击事件
             var JDaddress = document.getElementById('JDaddress');
             JDaddress.addEventListener('tap', function (event) {
 //                获取用户地址
-                if (sessionStorage.getUserAddress0103) {
-                    var obj = JSON.parse(sessionStorage.getUserAddress0103);
-                    dataRebder(obj);
-                } else {
-                    $.get(contextPath + "/common/loadAreas/getUserAddress", function (data) {
-                        var data = JSON.parse(data)
-                        if (!!data.userAddress) {
-                            sessionStorage.getUserAddress0103=JSON.stringify(data.userAddress);
-                            var obj = JSON.parse(sessionStorage.getUserAddress0103);
-                            dataRebder(obj);
-                        } else {
+                $.get(contextPath + "/common/loadAreas/getUserAddress", function (data) {
+                    var data = JSON.parse(data)
+                    if (!!data.userAddress) {
+                        var obj = data.userAddress;
+                        dataRebder(obj);
+                    } else {
 //                            选择地址
-                            selectAddress();
-                        }
-                    });
-
-
-                }
+                        selectAddress();
+                    }
+                });
             }, false);
-
-
 //            用户地址数据展示
             function dataRebder(obj){
 //                数据拼接
                 var ulHtml = '';
                 for (var i = 0; i < obj.length; i++) {
                     if (obj[i].commonAddr == "1") {
-                        ulHtml += "<li class='hasJDaddress-active'>" + obj[i].province + " " + obj[i].city + " " + obj[i].area + " " + obj[i].subAdds + "</li>";
+                        ulHtml += "<li class='hasJDaddress-active' data-addrId='"+obj[i].addrId+"'>" + obj[i].province + " " + obj[i].city + " " + obj[i].area + " " + obj[i].subAdds + "</li>";
                     } else {
-                        ulHtml += "<li>" + obj[i].province + " " + obj[i].city + " " + obj[i].area + " " + obj[i].subAdds + "</li>";
+                        ulHtml += "<li data-addrId='"+obj[i].addrId+"'>" + obj[i].province + " " + obj[i].city + " " + obj[i].area + " " + obj[i].subAdds + "</li>";
                     }
-
                 }
                 $(".hasJDaddress-list").html(ulHtml);
 //                地址框上滑
                 $('#hasJDaddress').addClass("mui-active");
 //                点击其他地址重新选取地址
                 $(".hasJDaddress-footer").on('tap', function () {
-
                     $('#hasJDaddress').removeClass("mui-active");
                     selectAddress();
                 });
 //                点击地址列表
-                $(".hasJDaddress-list").on('tap', function (e) {
-                    debugger;
-                    console.log(e);
+                $(".hasJDaddress-list").one('tap', function (e) {
+                    addrId = $(e.target).data("addrId");
                     $("#cityResult").html(e.target.innerText);
                     var liIndex;
                     var listLi = $(this).children();
                     for (var j = 0; j < listLi.size(); j++) {
-                        obj[j].commonAddr="0";
                         if (listLi[j] == e.target) {
                             liIndex = j;
-                            console.log(liIndex);
-                            obj[j].commonAddr="1";
                         }
                     }
 //                    检查货存
                     checkJdProdState(obj,liIndex);
-//                    跟新本地存储
-                    sessionStorage.getUserAddress0103=JSON.stringify(obj);
 //                  地址框下滑
                     $('#hasJDaddress').removeClass("mui-active");
                 })
@@ -106,13 +105,11 @@
                     cityId: obj[liIndex].cityId,
                     areaId: obj[liIndex].areaId
                 };
-                console.log(params)
                 $.ajax({
                     type: "POST",
                     url: contextPath + "/checkJdProdState",
                     data: params,
                     success: function (data) {
-                        console.log(data)
                         var data = JSON.parse(data)
                         if (data.soldOut == "1") {
                             $(".nogoods-word").css({display: "block"});
@@ -135,6 +132,9 @@
                     document.getElementById('cityResult').innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
                     //返回 false 可以阻止选择框的关闭
                     //return false;
+                    provinceId=(items[0] || {}).value;
+                    cityId=(items[1] || {}).value;
+                    areaId=(items[2] || {}).value;
                     var params = {
                         prodId: currProdId,
                         provinceId: items[0].value,
@@ -165,7 +165,6 @@
                     });
                 });
             }
-
 //            关闭地址框
             $("#hasJDaddress i").on('tap', function () {
                 $('#hasJDaddress').removeClass("mui-active");
@@ -173,6 +172,5 @@
         });
     })
 </script>
-
 </body>
 </html>

@@ -20,6 +20,9 @@
         ul{
             list-style-type: none;
         }
+        ul li {
+            margin: 5px;
+        }
     </style>
     <!--<script src="https://suggest.taobao.com/sug?code=utf-8&q=666&_ksTS=1468573812937_30235&callback=jsonp30236&k=1&area=c2c&bucketid=16"></script>-->
 </head>
@@ -32,7 +35,7 @@
     <script src="jq.js"></script>
     <script>
         $(function(){
-            $("#search").on('input',function(){
+            $("#search").on(' ',function(){
                 var value = $(this).val();
                 var url  = 'https://suggest.taobao.com/sug?code=utf-8&_ksTS=1468573812937_30235&k=1&bucketid=16&area=c2c'
                 url += "&q="+value;

@@ -254,45 +254,96 @@
 
 		</div>
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="utf-8">
+		<!--<script type="text/javascript" charset="utf-8">-->
+			<!--//mui初始化-->
+			<!--mui.init({-->
+				<!--swipeBack: true //启用右滑关闭功能-->
+			<!--});-->
+			<!--var info = document.getElementById("info");-->
+<!--//			document.getElementById("alertBtn").addEventListener('tap', function() {-->
+<!--//				mui.alert('111', '你在商品浏览过程中所选择的配送地址与当前收货地址不同，是否去新建一个收货地址。','21321', function() {-->
+<!--//					info.innerText = '你刚关闭了警告框';-->
+<!--//                    console.log(1);-->
+<!--//				});-->
+<!--//			});-->
+<!--//			document.getElementById("confirmBtn").addEventListener('tap', function() {-->
+<!--//				var btnArray = ['取消', '新建'];-->
+<!--//				var popupText ='<ul>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\-->
+<!--//				</ul>';-->
+<!--//				mui.confirm(popupText, '你修改了配送地址，是否切换？', btnArray, function(e) {-->
+<!--//					if (e.index == 1) {-->
+<!--//						debugger-->
+<!--//						info.innerText = '确认';-->
+<!--//                        console.log(1);-->
+<!--//					} else {-->
+<!--//						info.innerText = '没有得到你的认可'-->
+<!--//					}-->
+<!--//				})-->
+<!--//			});-->
+<!--//			$('#submitAddress').on('tap', function (e) {-->
+<!--//				$(this).children().each(function (i) {-->
+<!--//					$(this).removeClass("address-active");-->
+<!--//				});-->
+<!--//				$(e.target).addClass("address-active");-->
+<!--//			})-->
+			<!--var popupText ='';-->
+<!--//			<c:if test="${saleOutProdList!=null}">-->
+<!--//			popupText ='<ul>\-->
+<!--//			<c:forEach items="${saleOutProdList}" var="saleOutProd">-->
+<!--//					<li>${saleOutProd.prodName}X${saleOutProd.basketCount}</li>\-->
+<!--//			</c:forEach>-->
+<!--//			</ul>';-->
+<!--//			</c:if>-->
+<!--//			if(popupText!=''){-->
+				<!--var popupTitle='选购商品部分无货！';-->
+				<!--var btnArray = ['更改收货地址', '返回购物车'];-->
+				<!--console.log("bbb")-->
+				<!--mui.confirm(popupText, popupTitle, btnArray, function(e) {-->
+					<!--if (e.index == 1) {//返回购物车-->
+						<!--debugger-->
+						<!--window.location.href="../shopcart";-->
+					<!--} else {//更改收货地址-->
+						<!--window.location.href="../p/addressList";-->
+					<!--}-->
+				<!--});-->
+<!--//			}-->
+		<!--</script>-->
+		<script>
 			//mui初始化
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
-			var info = document.getElementById("info");
-//			document.getElementById("alertBtn").addEventListener('tap', function() {
-				mui.alert('111', '你在商品浏览过程中所选择的配送地址与当前收货地址不同，是否去新建一个收货地址。','21321', function() {
-					info.innerText = '你刚关闭了警告框';
-                    console.log(1);
-				});
-//			});
-//			document.getElementById("confirmBtn").addEventListener('tap', function() {
-				var btnArray = ['取消', '新建'];
-				var popupText ='<ul>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				<li>VENUM ELITE BOXING GLOVES毒液正品“精英”拳击手套散打大事发生发噶啊…</li>\
-				</ul>';
-				mui.confirm(popupText, '你修改了配送地址，是否切换？', btnArray, function(e) {
-					if (e.index == 1) {
-						info.innerText = '确认';
-                        console.log(1);
-					} else {
-						info.innerText = '没有得到你的认可'
-					}
-				})
-//			});
-//			$('#submitAddress').on('tap', function (e) {
-//				$(this).children().each(function (i) {
-//					$(this).removeClass("address-active");
-//				});
-//				$(e.target).addClass("address-active");
-//			})
+
+			showSaleOutProdList();
+
+			function showSaleOutProdList(){
+				var popupText ='';
+
+				popupText ='<ul>\
+			</ul>';
+
+				if(popupText!=''){
+					var popupTitle='选购商品部分无货！';
+					var btnArray = ['更改收货地址', '返回购物车'];
+					console.log("bbb")
+					mui.confirm(popupText, popupTitle, btnArray, function(e) {
+						if (e.index == 1) {//返回购物车
+							debugger
+							window.location.href="../shopcart";
+						} else {//更改收货地址
+							window.location.href="../p/addressList";
+						}
+					});
+				}
+			}
 		</script>
 	</body>
 
