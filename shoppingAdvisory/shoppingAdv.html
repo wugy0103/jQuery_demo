@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- 删除苹果默认的工具栏和菜单栏 -->
@@ -36,6 +35,7 @@
 </head>
 
 <body>
+
 <div class="layout" id="layout">
     <header class="title">
         <i class="if icon-jiantou1"></i>
@@ -50,6 +50,20 @@
         <a class="fr" href="">个人中心</a>
     </footer>
 
+</div>
+<style>
+    .shopping-adv{
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+        padding: 10px;
+        max-width: 768px;
+        background-color: #fff;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+</style>
+<div class="shopping-adv">
+    购物咨询 <i class="if icon-jiantou fr"></i>
 </div>
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
@@ -74,7 +88,7 @@
                     <div class="bgf5">\
                             <p>'+liObj[j].newsContent+'</p>\
                     <div class="clearfix contact">\
-                            <a class="fl"><i class="if icon-icon052"></i>商城客服</a>\
+                            <a id="kefu" class="fl"><i class="if icon-icon052"></i>商城客服</a>\
                     <a class="fr"><i class="if icon-fankui"></i>意见反馈</a>\
                     </div>\
                     </div>\
@@ -88,15 +102,33 @@
                 contantHtml +=sectionHtml;
 
                 $("#contant").html(contantHtml);
+                $(".question>i").eq(0).addClass("active")
             },
             error: function (err) {
                 console.log(err)
             }
         })
+
         $("main").on("click",".question", function () {
             $(".bgf5").slideUp();
-            $(this).parent().find(".bgf5").stop().slideDown();
+            $(".question>i").removeClass("active")
+            $(this).parent().find(".bgf5").stop().slideDown().parent().find("i").addClass("active");
         })
+        //跳转到APP商城客服聊天页面
+        $("main").on("click","#kefu",function(){
+            if(1==1){
+                alert("亲，您可以拨打客服电话咨询 020-29066106 \\ 020-29822343");
+            }
+            if(typeof(window.android) != 'undefined' && window.android.isAppOpen()){
+                window.android.mallToShopCustomerService(159070041);
+            }
+            if(isIOS()&&!isWeiBo()){
+                connectWebViewJavascriptBridge(function(bridge) {
+                    bridge.callHandler('mallToShopCustomerService', {"groupId":159070041}, function(response) {
+                    });
+                });
+            }
+        });
     });
 </script>
 </body>
