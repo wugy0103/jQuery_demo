@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- 设置苹果工具栏颜色 -->
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name='apple-itunes-app' content='app-id=966436668'>
+    <!-- 适应移动端end -->
+    <title>购物咨询</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_m9fndqubtpjve7b9.css"/>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+<div class="layout" id="layout">
+    <header class="title">
+        <i class="if icon-jiantou1"></i>
+        购物咨询
+    </header>
+    <!-- 内容 start -->
+    <main id="contant">
+    </main>
+    <!-- 内容 end -->
+    <footer class="clearfix">
+        <a class="fl index" href="">健康商城首页</a>
+        <a class="fr" href="">个人中心</a>
+    </footer>
+
+</div>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        // 点击延迟处理
+        FastClick.attach(document.body);
+
+        $.ajax({
+            url:"data.json",
+            success: function (data) {
+                console.log(data)
+                var contantHtml='';
+                var ulHtml='';
+                var sectionHtml='';
+                for(var i=0;i<data.length;i++){
+                    for(var j= 0;j<data[i].subNews.length;j++){
+                        var liObj=data[i].subNews;
+                        ulHtml +='<li >\
+                    <h3 class="question">'+liObj[j].newsTitle+'<i class="if icon-jiantou1 fr"></i></h3>\
+                    <div class="bgf5">\
+                            <p>'+liObj[j].newsContent+'</p>\
+                    <div class="clearfix contact">\
+                            <a class="fl"><i class="if icon-icon052"></i>商城客服</a>\
+                    <a class="fr"><i class="if icon-fankui"></i>意见反馈</a>\
+                    </div>\
+                    </div>\
+                    </li>';
+                    }
+                    sectionHtml +='<section>\
+                    <h2>'+data[i].newsCategoryName+'</h2>\
+                    <ul>'+ulHtml+'</ul>\
+                    </section>';
+                }
+                contantHtml +=sectionHtml;
+
+                $("#contant").html(contantHtml);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        $("main").on("click",".question", function () {
+            $(".bgf5").slideUp();
+            $(this).parent().find(".bgf5").stop().slideDown();
+        })
+    });
+</script>
+</body>
+
+</html>

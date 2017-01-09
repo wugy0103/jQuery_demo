@@ -1,0 +1,125 @@
+/*
+* @Author: wuguoyuan
+* @Date:   2016-09-09 15:06:32
+* @Last Modified by:   wuguoyuan
+* @Last Modified time: 2016-09-26 14:43:47
+*/
+
+@charset 'utf-8';
+.layout {
+    width: 100%;
+    max-width: 768px;
+    min-width: 300px;
+    margin: 0 auto;
+    background-color: #fff;
+    overflow: hidden;
+}
+/*标题 start*/
+.title {
+    background: #33C774;
+    color:#fff;
+    text-align: center;
+    position: relative;
+    height: 3.5rem;
+    line-height: 3.5rem;
+    font-size: 1.6rem;
+}
+.title i {
+    position: absolute;
+    left: 0.5rem;
+    font-size: 2.6rem;
+}
+/*标题 end*/
+/*简介 start*/
+
+section {
+    border-bottom: 1rem solid #F2F2F2;
+    padding: 1rem 0 0;
+    width: 100%;
+}
+
+section h2 {
+    font-family: STHeitiSC-Light;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-weight: bold;
+    position: relative;
+    padding-left: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dddddd;
+    margin: 0 1rem;
+}
+
+section h2::before {
+    content: "";
+    position: absolute;
+    height: 2rem;
+    width: 0.3rem;
+    background-color: #85ddac;
+    margin-left: -1rem;
+}
+section h3.question {
+    font-family: STHeitiSC-Light;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    position: relative;
+    padding-left: 1rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-bottom: 1px solid #dddddd;
+    background-color: #fff;
+    margin: 0 1rem;
+}
+section h3.question>i {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.bgf5 {
+    background: #F5F5F5;
+    display: none;
+}
+section p {
+    padding: 1rem;
+    border-bottom: 1px solid #dddddd;
+    margin: 0 1rem;
+}
+.contact {
+    padding: 1rem 0;
+    border-bottom: 1px solid #dddddd;
+    margin: 0 1rem;
+}
+.contact a {
+    width: 50%;
+    text-align: center;
+}
+.contact a:first-child {
+    border-right: 1px solid #dddddd;
+}
+.contact a i {
+    font-size: 1.6rem;
+    padding: 0.2rem;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+}
+.contact a:first-child  i {
+    background-color:#2FC547;
+}
+.contact a:last-child  i {
+    background-color:#F5BD00;
+}
+footer {
+    padding: 1rem;
+    font-size: 1.6rem;
+}
+footer a {
+    width: 50%;
+    text-align: center;
+}
+footer a.index {
+    color: #2ac845;
+    border-right: 1px solid #dddddd;
+}

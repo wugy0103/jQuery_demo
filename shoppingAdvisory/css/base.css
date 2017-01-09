@@ -1,0 +1,112 @@
+/*
+* @Author: wuguoyuan
+* @Date:   2016-09-09 15:54:14
+* @Last Modified by:   wuguoyuan
+* @Last Modified time: 2016-09-20 10:31:35
+*/
+
+@charset "utf-8";
+
+/*reset css*/
+
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /* 取消链接高亮  */
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}
+
+html {
+    font-size: 10px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+@media only screen and (min-width: 410px) {
+    html {
+        font-size: 12px !important;
+    }
+}
+
+@media only screen and (min-width: 560px) {
+    html {
+        font-size: 14px !important;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    html {
+        font-size: 16px !important;
+    }
+}
+@media only screen and (min-width: 768px) {
+    html {
+        font-size: 18px !important;
+    }
+}
+body {
+    font-size: 1.2rem;
+    font-family: "STHeitiSC-Light","Microsoft Yahei", Arial, Helvetica, sans-serif;
+    color: #5C5C5C;;
+    background-color: #f2f2f2;
+}
+
+a,
+a:hover {
+    color: #333;
+    text-decoration: none
+}
+
+li,
+ol,
+ul {
+    list-style: none
+}
+
+h1,
+h2,
+h3 {
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 100%;
+}
+
+img {
+    display: block;
+    border: none;
+    vertical-align: top;
+}
+
+i,
+b {
+    font-style: normal;
+    font-weight: normal;
+}
+
+.block,
+main,
+header,
+footer,
+section {
+    display: block
+}
+
+.clearfix::after {
+    content: '';
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
