@@ -1,0 +1,161 @@
+/*
+* @Author: wuguoyuan
+* @Date:   2016-09-09 15:54:14
+* @Last Modified by:   wuguoyuan
+* @Last Modified time: 2016-09-20 10:31:35
+*/
+/*商城样式重置*/
+@charset "utf-8";
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /* 取消链接高亮  */
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}
+
+html {
+    font-size: 10px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+@media only screen and (min-width: 410px) {
+    html {
+        font-size: 12px !important;
+    }
+}
+
+@media only screen and (min-width: 560px) {
+    html {
+        font-size: 14px !important;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    html {
+        font-size: 16px !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    html {
+        font-size: 18px !important;
+    }
+}
+
+body {
+    font-size: 1.2rem;
+    font-family: "PingFangSC-Regular", "STHeitiSC-Light", "Microsoft Yahei", Arial, Helvetica, sans-serif;
+    color: #323232;;
+    background-color: #ffffff;
+}
+
+html, body {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+a,
+a:hover {
+    color: #333;
+    text-decoration: none;
+    -webkit-touch-callout: none;
+}
+
+li,
+ol,
+ul {
+    list-style: none
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 100%;
+}
+
+img {
+    display: block;
+    border: none;
+    vertical-align: top; /*  去掉图片低测默认的3像素空白缝隙*/
+    -webkit-touch-callout: none;
+}
+
+fieldset, input, button {
+    /*fieldset组合表单中的相关元素*/
+    border: none;
+    outline-style: none;
+}
+
+select, input {
+    vertical-align: middle;
+}
+
+textarea {
+    resize: none; /*防止多行文本框拖动*/
+}
+
+table {
+    border-collapse: collapse; /*合并外边线*/
+}
+
+i,
+s,
+b {
+    font-style: normal;
+    font-weight: normal;
+}
+
+input, textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    /*在移动设备当中 有一些浏览器是会有自己的默认样式*/
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.block,
+nav,
+main,
+header,
+footer,
+section {
+    display: block
+}
+
+.clearfix::before,
+.clearfix::after {
+    content: '';
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.main-color {
+    color: #33C774 !important;
+}
+
+.layout {
+    width: 100%;
+    max-width: 768px;
+    min-width: 300px;
+    margin: 0 auto;
+    background-color: #fff;
+    overflow: hidden;
+}

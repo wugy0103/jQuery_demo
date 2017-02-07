@@ -1,0 +1,34 @@
+header {
+    height: 4rem;
+    border-bottom: 1px solid #F2F2F2;
+    padding:0 1.5rem;
+}
+header .fl {
+    font-size: 1.3rem;
+    line-height: 4rem;
+    position: relative;
+    padding-left: 2rem;
+}
+header .fl::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    background: url("../image/allProduct@2x.png") no-repeat;
+    -webkit-background-size: 1.4rem 1.4rem;
+    background-size: 1.4rem 1.4rem;
+}
+header .fl::after {
+    content: '26';
+    position: absolute;
+    color: #666666;
+    margin-left: 0.5rem;
+}
+header .fr {
+    font-size: 1.4rem;
+    line-height: 4rem;
+}

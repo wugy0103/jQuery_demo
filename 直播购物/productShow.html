@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 删除苹果默认的工具栏和菜单栏 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- 设置苹果工具栏颜色 -->
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name='apple-itunes-app' content='app-id=966436668'>
+    <!-- 适应移动端end -->
+    <title>商品展示</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/productShow.css">
+</head>
+<body>
+<div class="layout">
+    <header class="clearfix">
+        <div class="fl">全部宝贝</div>
+        <a href="#" class="fr">我的订单</a>
+    </header>
+    <!-- 内容 start -->
+    <main>
+        <div class="product-box">
+            <div class="fl">
+                <img src="" alt=""/>
+            </div>
+        </div>
+    </main>
+    <!-- 内容 end -->
+    <footer>
+
+    </footer>
+</div>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/template.js"></script>
+<script>
+    $(function () {
+        // 点击延迟处理
+        FastClick.attach(document.body);
+    })
+</script>
+</body>
+</html>
