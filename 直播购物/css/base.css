@@ -151,11 +151,11 @@ section {
     color: #33C774 !important;
 }
 
-.layout {
+header,.layout {
     width: 100%;
-    max-width: 768px;
+    /*max-width: 768px;*/
     min-width: 300px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     background-color: #fff;
     overflow: hidden;
 }

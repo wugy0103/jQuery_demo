@@ -1,3 +1,11 @@
+/*覆盖插件样式*/
+.mui-scroll-wrapper {
+    z-index: 1;
+}
+.mui-content {
+    background-color: #fff;
+}
+/*头部*/
 header {
     height: 4rem;
     border-bottom: 1px solid #F2F2F2;

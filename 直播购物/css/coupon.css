@@ -1,0 +1,177 @@
+/*覆盖插件样式*/
+.mui-scroll-wrapper {
+    z-index: 1;
+}
+.mui-content {
+    background-color: #fff;
+}
+.mui-scroll {
+     position: static;
+}
+h1 {
+    padding: 0;
+    margin: 0;
+    line-height: 4rem;
+}
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
+    color: #33C774;
+}
+.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+    font-size: 2rem   ;
+}
+.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {
+    position: absolute;
+    top: 0.8rem;
+    margin-left: -1rem;
+
+}
+
+/*头部*/
+header {
+    height: 4rem;
+    line-height: 4rem;
+    border-bottom: 1px solid #F2F2F2;
+    position: fixed;
+    background-color: #fff;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #333333;
+    overflow: hidden;
+}
+
+header a {
+    position: absolute;
+    left: 0;
+    padding:0 1.5rem;
+    -webkit-transform: scaleY(2);
+    transform: scaleY(2);
+}
+main {
+    border-top: 1rem solid #F5F5F5;
+    margin-top: 4rem;
+    padding: 1.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 4rem;
+}
+
+/*优惠券*/
+.coupon-box {
+    width: 100%;
+    position: relative;
+    margin-bottom: 0.8rem;
+}
+.coupon-bg {
+    float: left;
+    width: 100%;
+}
+.coupon-box .clearfix {
+    position: absolute;
+    width: 100%;
+}
+.mui-checkbox label {
+    font-family: PingFangSC-Regular;
+    font-size: 1rem;
+    color: #BCBCBC;
+    padding: 1.3rem 0rem;
+    padding-left: 3rem !important;
+}
+.number {
+    margin: 1rem 1rem 0 0;
+}
+.subbox2 {
+    top: 3.5rem;
+}
+.subbox2 .fl {
+    color: #FF7B1E;
+    margin: 1rem 0 0 1.5rem;
+
+}
+.subbox2 .price {
+    font-size: 2.6rem;
+    margin-left: 0.5rem;
+}
+.subbox2 .fr div {
+    text-align: right;
+    margin-right: 1rem;
+    color: #333333;
+}
+.subbox2 .fr div:nth-of-type(1){
+    font-size: 1.6rem;
+    line-height: 2rem;
+}
+.subbox2 .fr div:nth-of-type(2){
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+}
+
+.subbox3 {
+    bottom: 0;
+    margin:0.4rem 1rem;
+}
+.subbox3 .fl {
+    font-size: 1rem;
+    color: #BCBCBC;
+    line-height: 2rem;
+}
+.subbox3 .fr {
+    margin-right: 2rem;
+}
+/*数字输入框*/
+.mui-numbox {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    min-width: 5rem !important;
+    width: 8rem !important;
+    height: 1.8rem;
+    padding: 0 2rem;
+    vertical-align: top;
+    vertical-align: middle;
+    border: solid 1px #bbb;
+    border-radius: 3px;
+    background-color: #fff;
+    border: 0 solid #999999;
+    border-radius: 4px;
+}
+.mui-numbox .mui-numbox-input {
+    display: inline-block;
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0 3px!important;
+    text-align: center;
+    text-overflow: ellipsis;
+    word-break: normal;
+    border: none!important;
+    border-radius: 0!important;
+}
+.mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn] {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 100%;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    width: 2rem;
+    height: 100%;
+    padding: 0;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    background-color: #f9f9f9;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.6rem;
+    color: #ffffff;
+    width: 100%;
+    background: #33C774;
+    text-align: center;
+}
