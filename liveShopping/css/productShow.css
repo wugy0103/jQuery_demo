@@ -35,7 +35,7 @@ header .fl::before {
     background-size: 1.4rem 1.4rem;
 }
 header .fl::after {
-    content: '26';
+    content: attr(data-content);
     position: absolute;
     color: #666666;
     margin-left: 0.5rem;
