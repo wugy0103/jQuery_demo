@@ -51,11 +51,11 @@
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
-        <div class="fl product-img">
+        <a href="{{prod.prodUrl}}" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
-        </div>
+        </a>
         <div class="fr product-info">
-            <h3 class="product-title">{{prod.title}}</h3>
+            <h3 class="product-title"><a href="{{prod.prodUrl}}">{{prod.title}}</a></h3>
 
             <div class="buyinfo clearfix">
                 <div class="fl">
@@ -108,7 +108,8 @@
                                     data: params,
                                     dataType: "json",
                                     success: function (pataData) {
-                                            mui('#content').pullRefresh().endPullupToRefresh(pataData.prodList.length==0);
+                                        console.log(pataData);
+                                        mui('#content').pullRefresh().endPullupToRefresh(pataData.prodList.length==0);
                                             var pataData = pataData;
                                             console.log(pataData);
                                             var pataHtml = template('product-box', pataData);

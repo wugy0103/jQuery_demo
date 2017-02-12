@@ -14,18 +14,6 @@ h1 {
     line-height: 4rem;
     font-weight: bold;
 }
-.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
-    color: #33C774;
-}
-.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
-    font-size: 2rem   ;
-}
-.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {
-    position: absolute;
-    top: 0.8rem;
-    margin-left: -1rem;
-
-}
 
 /*头部*/
 header,nav {
@@ -80,6 +68,15 @@ nav {
     display: inline-block;
     margin-left: 6px;
 }
+li.up,li.down {
+    color: #33C774;
+}
+li.up i {
+    background: url(../image/sort.png) no-repeat -8px 0px;
+}
+li.down i {
+    background: url(../image/sort.png) no-repeat right;
+}
 main {
     margin-top: 8rem;
     margin-bottom: 4rem;
@@ -87,69 +84,57 @@ main {
 
 /*单个商品*/
 .product-box {
-    padding: 1rem 0;
+    padding: 0.3rem 0 1rem;
     border-bottom: 1px solid #F2F2F2;
+    position: relative;
 }
 .product-img {
-    width: 30%;
+    width: 28%;
     margin-left: 3%;
-    border: 0.6rem solid #F5F7F6;
+    margin-top: 0.5rem;
 }
 .product-img img {
     width: 100%;
 }
 .product-info {
-    width: 60%;
+    width: 62%;
     margin-right: 3%;
 }
 .product-title {
     font-size: 1.3rem;
     line-height: 2rem;
-    position: relative;
-    text-indent: 2.5rem;
+    padding-right:2rem;
 
 }
-.product-title::before {
-    content: 'hot';
+.product-title::after {
+    content: '';
+    background: url("../image/fenxiao@2x.png") no-repeat;
+    -webkit-background-size: 2.5rem;
+    background-size: 2.5rem;
     position: absolute;
-    top: 0.5rem;
-    left: 0;
-    width: 2.2rem;
-    height: 1.2rem;
-    line-height: 1.2rem;
+    top: 0;
+    right: 0.8rem;
+    width: 2.5rem;
+    height: 2.5rem;
     text-align: center;
-    background: #FFD200;
     border-radius: 0.2rem;
     text-indent: 0rem;
     font-size: 1rem;
     color: #ffffff;
-    -webkit-transform: scale(0.8, 0.8);
-    transform: scale(0.8, 0.8);/*文字有最小限制*/
+
 }
 .buyinfo {
     margin-top: 1.5rem;
 }
-.price b {
+.price b,.price i {
     color:#E52D01;
-}
-.price s {
-    font-size: 1rem;
-    color: #999999;
-    margin-left: 1rem;
+    margin-right: 1rem;
 }
 .peopleNum {
     margin-top: 0.8rem;
     font-size: 1.1rem;
     color: #999999;
 }
-.buyBtn {
-    border: 1px solid #2ac845;
-    border-radius: 0.5rem;
-    font-size: 1.4rem;
-    padding:0.5rem 1rem;
-    margin-top: 0.5rem;
-}
-
 
 footer {
     position: fixed;
@@ -159,8 +144,23 @@ footer {
     height: 4rem;
     line-height: 4rem;
     font-size: 1.6rem;
-    color: #ffffff;
     width: 100%;
-    background: #33C774;
+    background: #fff;
+    border-top: 1px solid #F2F2F2;
+}
+footer a {
+    float: left;
+    width: 50%;
     text-align: center;
+}
+footer .addProd {
+    color: #33C774;
+
+}
+footer .allManage {
+    color: #000;
+    border-left: 1px solid #ddd;
+    height: 2rem;
+    line-height: 2rem;
+    margin-top: 1rem;
 }
