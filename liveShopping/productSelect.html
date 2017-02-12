@@ -136,7 +136,7 @@
                                         data: params,
                                         dataType: "json",
                                         success: function (pataData) {
-                                            mui('#content').pullRefresh().endPullupToRefresh(pataData.prodList.length==0);
+                                            mui('#content').pullRefresh().endPullupToRefresh(pataData=={});
                                             var pataData = pataData;
                                             console.log(pataData);
                                             var pataHtml = template('product-box', pataData);
