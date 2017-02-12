@@ -89,6 +89,9 @@
             addtimeOrder:"desc"
         };
         getProductList(params);
+        if($(".product-box").size()==0){
+            $("#mui-scroll").addClass("noProduct");
+        }
         $(".shop-nav li").bind('click', function() {
             var field = $(this).find("i").data("field");
             if ($(this).hasClass("up")) {

@@ -1,4 +1,4 @@
-/*¸²¸Ç²å¼şÑùÊ½*/
+/*è¦†ç›–æ’ä»¶æ ·å¼*/
 .mui-scroll-wrapper {
     z-index: 1;
 }
@@ -26,7 +26,7 @@ h1 {
 
 }
 
-/*Í·²¿*/
+/*å¤´éƒ¨*/
 header {
     height: 4rem;
     line-height: 4rem;
@@ -56,7 +56,7 @@ main {
     margin-bottom: 4rem;
 }
 
-/*ÓÅ»İÈ¯*/
+/*ä¼˜æƒ åˆ¸*/
 .coupon-box {
     width: 100%;
     position: relative;
@@ -118,7 +118,7 @@ main {
 .subbox3 .fr {
     margin-right: 2rem;
 }
-/*Êı×ÖÊäÈë¿ò*/
+/*æ•°å­—è¾“å…¥æ¡†*/
 .mui-numbox {
     position: relative;
     display: inline-block;

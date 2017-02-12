@@ -1,11 +1,11 @@
-/*¸²¸Ç²å¼şÑùÊ½*/
+/*è¦†ç›–æ’ä»¶æ ·å¼*/
 .mui-scroll-wrapper {
     z-index: 1;
 }
 .mui-content {
     background-color: #fff;
 }
-/*Í·²¿*/
+/*å¤´éƒ¨*/
 header {
     height: 4rem;
     border-bottom: 1px solid #F2F2F2;
@@ -44,7 +44,7 @@ header .fr {
     font-size: 1.4rem;
     line-height: 4rem;
 }
-/*µ¥¸öÉÌÆ·*/
+/*å•ä¸ªå•†å“*/
 .product-box:first-of-type {
     margin-top: 4rem;
 }
@@ -86,7 +86,7 @@ header .fr {
     font-size: 1rem;
     color: #ffffff;
     -webkit-transform: scale(0.8, 0.8);
-    transform: scale(0.8, 0.8);/*ÎÄ×ÖÓĞ×îĞ¡ÏŞÖÆ*/
+    transform: scale(0.8, 0.8);/*æ–‡å­—æœ‰æœ€å°é™åˆ¶*/
 }
 .buyinfo {
     margin-top: 1.5rem;

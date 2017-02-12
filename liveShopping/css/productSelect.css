@@ -1,4 +1,4 @@
-/*覆盖插件样式*/
+/*瑕嗙洊鎻掍欢鏍峰紡*/
 .mui-scroll-wrapper {
     z-index: 1;
 }
@@ -15,7 +15,7 @@ h1 {
     font-weight: bold;
 }
 
-/*头部*/
+/*澶撮儴*/
 header,nav {
     height: 4rem;
     line-height: 4rem;
@@ -81,8 +81,13 @@ main {
     margin-top: 8rem;
     margin-bottom: 4rem;
 }
-
-/*单个商品*/
+.noProduct {
+    background: url("../image/default_NoVideo@2x.png") no-repeat;
+}
+.noProduct::after {
+    content: '鏆傛棤鐩存挱鍟嗗搧...';
+}
+/*鍗曚釜鍟嗗搧*/
 .product-box {
     padding: 0.3rem 0 1rem;
     border-bottom: 1px solid #F2F2F2;
