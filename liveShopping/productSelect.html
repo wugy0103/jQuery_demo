@@ -37,7 +37,7 @@
     <header>
         <a href="#" class="return"><</a>
         <h1>直播商品</h1>
-        <a href="#" class="sync">同步动力店商品</a>
+        <a href="#" class="sync" id="sync">同步动力店商品</a>
     </header>
     <nav >
         <ul class="shop-nav">
@@ -88,11 +88,18 @@
         var params = {
             addtimeOrder:"desc"
         };
-        getProductList(params);
-        if($(".product-box").size()==0){
-            $("#mui-scroll").addClass("noProduct");
+        getProductList(params,callback);
+//        判断有没有直播商品
+        function callback(){
+            if($(".product-box").size()==0){
+                $("#mui-scroll").addClass("noProduct");
+            }else {
+                $(".allManage").css("display","block");
+                $(".addProd").width("50%");
+            }
         }
-        $(".shop-nav li").bind('click', function() {
+//        排序
+        $(".shop-nav li").on('click', function() {
             var field = $(this).find("i").data("field");
             if ($(this).hasClass("up")) {
                 $(this).removeClass("up").addClass('down');
@@ -110,7 +117,26 @@
                 getProductList(params);
             }
         });
-        function getProductList(params){
+//        同步动力店
+        $("#sync").on("click", function () {
+            $.ajax({
+                url:"/liveshoppingManage/synShopProd",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if(data.code==1){
+                        window.location.reload();
+                    }else {
+                        alert(data.msg);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+//        加载
+        function getProductList(params,callback){
             $.ajax({
                 url: "data/productSelect.json",
                 type: "GET",
@@ -157,6 +183,7 @@
                             }
                         }
                     });
+                    callback();
                 },
                 error: function (err) {
                     console.log(err)
