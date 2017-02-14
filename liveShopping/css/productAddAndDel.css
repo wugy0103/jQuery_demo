@@ -1,0 +1,230 @@
+/*覆盖插件样式*/
+.mui-scroll-wrapper {
+    z-index: 1;
+}
+.mui-content {
+    background-color: #fff;
+}
+.mui-scroll {
+     position: static;
+}
+h1 {
+    padding: 0;
+    margin: 0;
+    line-height: 4rem;
+    font-weight: bold;
+}
+
+/*头部*/
+header,nav {
+    height: 4rem;
+    line-height: 4rem;
+    border-bottom: 1px solid #F2F2F2;
+    position: fixed;
+    background-color: #fff;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #333333;
+    overflow: hidden;
+}
+
+header a.return {
+    position: absolute;
+    left: 0;
+    padding:0 1.5rem;
+    -webkit-transform: scaleY(2);
+    transform: scaleY(2);
+}
+header a.sync {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding:0 1.5rem;
+    font-size: 1.2rem;
+}
+
+nav {
+    top: 4rem;
+    left: 0;
+
+}
+.shop-nav li {
+    float: left;
+    border-right: 1px solid #eee;
+    position: relative;
+    width: 33.33%;
+    text-align: center;
+    font-size: 1.3rem;
+    height: 2rem;
+    line-height: 2rem;
+    margin-top: 1rem;
+}
+.shop-nav li:nth-of-type(2){
+    width: 41.66%;
+}
+.shop-nav li:nth-of-type(3){
+    width: 25%;
+}
+.shop-nav i {
+    background: url(../image/sort.png) no-repeat;
+    height: 12px;
+    width: 8px;
+    display: inline-block;
+    margin-left: 6px;
+}
+li.up,li.down {
+    color: #33C774;
+}
+li.up i {
+    background: url(../image/sort.png) no-repeat -8px 0px;
+}
+li.down i {
+    background: url(../image/sort.png) no-repeat right;
+}
+main {
+    margin-top: 8rem;
+    margin-bottom: 4rem;
+}
+.noProduct {
+    width: 100%;
+    height: 100%;
+    background: url("../image/default_NoVideo@2x.png") no-repeat center;
+    -webkit-background-size: 60%;
+    background-size: 60%;
+}
+.noProduct::after {
+    content: '暂无直播商品...';
+    position: absolute;
+    bottom: 5rem;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+
+}
+/*单个商品*/
+.product-box {
+    padding: 0.3rem 0 1rem;
+    border-bottom: 1px solid #F2F2F2;
+    position: relative;
+}
+.product-img {
+    width: 28%;
+    margin-top: 0.5rem;
+}
+.product-img img {
+    width: 100%;
+}
+.product-info {
+    width: 57%;
+    margin-right: 3%;
+}
+.product-title {
+    font-size: 1.3rem;
+    line-height: 2rem;
+    padding-right:2rem;
+
+}
+.product-title::after {
+    content: '';
+    background: url("../image/fenxiao@2x.png") no-repeat;
+    -webkit-background-size: 2.5rem;
+    background-size: 2.5rem;
+    position: absolute;
+    top: 0;
+    right: 0.8rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    text-indent: 0rem;
+    font-size: 1rem;
+    color: #ffffff;
+
+}
+.buyinfo {
+    margin-top: 1.5rem;
+}
+.price b,.price i {
+    color:#E52D01;
+    margin-right: 1rem;
+}
+.peopleNum {
+    margin-top: 0.8rem;
+    font-size: 1.1rem;
+    color: #999999;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.6rem;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #F2F2F2;
+}
+footer a {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+footer .addProd {
+    color: #33C774;
+    width: 100%;
+
+}
+footer .allManage {
+    color: #000;
+    border-left: 1px solid #ddd;
+    height: 2rem;
+    line-height: 2rem;
+    margin-top: 1rem;
+    display: none;
+}
+.product-check {
+    overflow: hidden;
+    float: left;
+    position: relative;
+    width: 10%;
+    height: 12rem;
+}
+.product-check input {
+    position: absolute;
+    width: 1.42857143rem;
+    height: 1.42857143rem;
+    opacity: 0;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.checkbox + label {
+    background-color: #FFF;
+    border: 1px solid #C1CACA;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    width: 1.42857143rem;
+    height: 1.42857143rem;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.checkbox:checked + label {
+    width: 1.42857143rem;
+    height: 1.42857143rem;
+    background: url(../image/selected@3x.png) no-repeat;
+    background-size: 1.42857143rem 1.42857143rem;
+    color: #243441;
+    border: none;
+}
