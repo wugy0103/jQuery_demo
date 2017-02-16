@@ -36,7 +36,7 @@
 <div class="layout">
     <header class="clearfix">
         <div class="fl">全部宝贝</div>
-        <a href="#" class="fr">我的订单</a>
+        <a href="/p/userOrder" class="fr">我的订单</a>
     </header>
     <!-- 内容 start -->
     <main id="content" class="mui-content mui-scroll-wrapper">
@@ -72,21 +72,31 @@
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
 <script src="js/lib/mui.min.js"></script>
+<script src="js/common.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
+        //设置cookie
+//        var uid = $.fn.cookie("uid");
+//        var device = $.fn.cookie("deviceType");
+//        $.fn.cookie("uid",uid,{domain:"daxmall.com",path:"/"});
+//        $.fn.cookie("deviceType",device,{domain:"daxmall.com",path:"/"});
+        var uid = getCookie("uid");
+        var device = getCookie("deviceType");
+        setCookie("uid",uid,"daxmall.com");
+        setCookie("deviceType",device,"daxmall.com");
         var params = {
             mallId: getQueryString("mallId")
         }
         $.ajax({
-            url: "data/productShow.json",
+            url: "/m_search/liveShoppingProdlist",
             type: "GET",
             data: params,
             dataType: "json",
             success: function (data) {
                 var data = data;
-                console.log(data);
+                console.log("第一次加载",data);
                 $("header .fl").data("content",data.prodCount);//在css中，伪元素的content是能读取到data属性的。
                 var html = template('product-box', data);
                 $('#mui-scroll').html(html);
@@ -103,21 +113,19 @@
                                 //业务逻辑代码，比如通过ajax从服务器获取新数据；
                                 params.curPageNO=data.curPageNO+1;
                                 $.ajax({
-                                    url: "data/productShow.json",
+                                    url: "/m_search/liveShoppingProdlist",
                                     type: "GET",
                                     data: params,
                                     dataType: "json",
                                     success: function (pataData) {
-                                        console.log(pataData);
-                                        mui('#content').pullRefresh().endPullupToRefresh(pataData=={});
+                                        console.log("分页加载",pataData);
+                                        data.curPageNO=pataData.curPageNO;
+                                        mui('#content').pullRefresh().endPullupToRefresh(!pataData.prodList);
                                             var pataData = pataData;
-                                            console.log(pataData);
                                             var pataHtml = template('product-box', pataData);
-                                            $('#mui-scroll').append(pataHtml);
+                                            $('.mui-pull-bottom-pocket').before(pataHtml);
                                     },
-                                    error: function (err) {
-                                        console.log(err)
-                                    }
+                                    error: ajaxError(err)
                                 })
                                 //注意：
                                 //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
@@ -128,19 +136,9 @@
                     }
                 });
             },
-            error: function (err) {
-                console.log(err)
-            }
-
+            error: ajaxError(err)
         })
 
-//        获取url参数值
-        function getQueryString(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]);
-            return null;
-        }
     })
 </script>
 </body>

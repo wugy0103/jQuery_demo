@@ -29,24 +29,8 @@ header,nav {
     color: #333333;
     overflow: hidden;
 }
-
-header a.return {
-    position: absolute;
-    left: 0;
-    padding:0 1.5rem;
-    -webkit-transform: scaleY(2);
-    transform: scaleY(2);
-}
-header a.sync {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding:0 1.5rem;
-    font-size: 1.2rem;
-}
-
 nav {
-    top: 4rem;
+    top: 0rem;
     left: 0;
 
 }
@@ -78,7 +62,7 @@ li.down i {
     background: url(../image/sort.png) no-repeat right;
 }
 main {
-    margin-top: 8rem;
+    margin-top: 4rem;
     margin-bottom: 4rem;
 }
 .noProduct {
@@ -129,7 +113,7 @@ main {
     background-size: 2.5rem;
     position: absolute;
     top: 0;
-    right: 0.8rem;
+    right: 0.5rem;
     width: 2.5rem;
     height: 2.5rem;
     text-align: center;

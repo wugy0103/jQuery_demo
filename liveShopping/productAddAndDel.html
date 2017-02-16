@@ -27,18 +27,13 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
-    <title>直播商品</title>
+    <title>添加/删除直播商品</title>
     <link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productAddAndDel.css">
 </head>
 <body>
 <div class="layout">
-    <header>
-        <a href="#" class="return"><</a>
-        <h1>直播商品</h1>
-        <a href="#" class="sync" id="sync">搜索</a>
-    </header>
     <nav >
         <ul class="shop-nav">
             <li class="down">全部类目<i></i></li>
@@ -54,8 +49,7 @@
     </main>
     <!-- 内容 end -->
     <footer>
-        <a href="#" class="addProd">添加商品</a>
-        <a href="#" class="allManage">批量管理</a>
+        <a href="#" class="addProd">添加已选商品</a>
     </footer>
 </div>
 <script id="product-box" type="text/html">
@@ -81,57 +75,58 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
+<script src="js/h5toiosapp.js"></script>
+<script src="js/common.js"></script>
 <script src="js/lib/mui.min.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
-        var params = {
-            addtimeOrder:"desc"
-        };
-        getProductList(params);
-//        排序
-        $(".shop-nav li").on('click', function() {
-            var field = $(this).find("i").data("field");
-            if ($(this).hasClass("up")) {
-                $(this).removeClass("up").addClass('down');
-                params[field] = "desc";
-                getProductList(params);
-            } else if ($(this).hasClass("down")) {
-                $(this).removeClass("down").addClass('up');
-                params[field] = "asc";
-                getProductList(params);
-            } else {
-                $(".shop-nav li").removeClass("down").removeClass("up");
-                params={};
-                $(this).addClass('down');
-                params[field] = "desc";
-                getProductList(params);
+        var type=getQueryString("type");
+        var params = {};
+        var reqUrl;
+        var handerUrl;
+        if(type=="add"){
+            $(".addProd").html("添加已选商品")
+            reqUrl = "/liveshoppingManage/getNotInLiveshoppingProdList";
+            handerUrl = "/liveshoppingManage/addDistProd";
+        }else if(type=="del") {
+            $(".addProd").html("删除已选商品")
+            reqUrl = "/liveshoppingManage/getInLiveshoppingProdList";
+            handerUrl = "/liveshoppingManage/removeDistProd";
+            params.addtimeOrder="desc";
+        }
+//        复选框
+        $(".layout").on("click","input",function () {
+            if($(".checkbox:checked").size()!=0){
+                $(".addProd").addClass("enabled");
+            }else{
+                $(".addProd").removeClass("enabled");
             }
-        });
-//        同步动力店
-        $("#sync").on("click", function () {
+        })
+        $(".layout").on("click",".enabled",function () {
             $.ajax({
-                url:"/liveshoppingManage/synShopProd",
-                type: "GET",
+                url:handerUrl,
+                type: "POST",
+                data: params,
                 dataType: "json",
-                success: function (data) {
-                    if(data.code==1){
-                        window.location.reload();
-                    }else {
-                        alert(data.msg);
-                    }
-                },
+                success: function (data) {},
                 error: function (err) {
-                    console.log(err);
+
                 }
             })
         })
+        getProductList(reqUrl,params);
+        connectWebViewJavascriptBridge(function(bridge) {
+            bridge.registerHandler('getProductListCallback', function(){
+                getProductList(reqUrl,params);
+            });
+        });
 //        加载
-        function getProductList(params){
+        function getProductList(reqUrl,params){
             $.ajax({
-                url: "data/productSelect.json",
-                type: "GET",
+                url: reqUrl,
+                type: "POST",
                 data: params,
                 dataType: "json",
                 success: function (data) {
@@ -152,16 +147,17 @@
                                     //业务逻辑代码，比如通过ajax从服务器获取新数据；
                                     params.curPageNO=data.curPageNO+1;
                                     $.ajax({
-                                        url: "data/productSelect.json",
-                                        type: "GET",
+                                        url: reqUrl,
+                                        type: "POST",
                                         data: params,
                                         dataType: "json",
                                         success: function (pataData) {
-                                            mui('#content').pullRefresh().endPullupToRefresh(pataData=={});
+                                            data.curPageNO=pataData.curPageNO;
+                                            mui('#content').pullRefresh().endPullupToRefresh(!pataData.prodList);
                                             var pataData = pataData;
                                             console.log(pataData);
                                             var pataHtml = template('product-box', pataData);
-                                            $('#mui-scroll').append(pataHtml);
+                                            $('.mui-pull-bottom-pocket').before(pataHtml);
                                         },
                                         error: function (err) {
                                             console.log(err)
@@ -182,7 +178,13 @@
 
             })
         }
-
+        //        获取url参数值
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
 
     })
 </script>

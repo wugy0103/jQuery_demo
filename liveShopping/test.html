@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/zepto.cookie.min.js"></script>
+</head>
+<body>
+<button id="btn">发送cookie</button>
+<script>
+    // 获取cookie
+    var getCookie = function(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+    // 设置cookie
+    var setCookie = function(c_name, value, expiredays) {
+        var exdate = new Date()
+        exdate.setDate(exdate.getDate() + expiredays)
+        document.cookie = c_name + "=" + escape(value) + ";domain=.daxmall.com;path=/" +
+                ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+    }
+
+    //794344304838474E4C5A46585633514263744A4C5F4B4B5031375868795149374468514B5F5451365737494B6B6A316172776D4E54527756362D6F425651384D6D5A43747833314A516D727041756452386C494F45672E2E
+    $.fn.cookie("uid","794344304838474E4C5A46585633514263744A4C5F4B4B5031375868795149374468514B5F5451365737494B6B6A316172776D4E54527756362D6F425651384D6D5A43747833314A516D727041756452386C494F45672E2E");
+    $.fn.cookie("deviceType","2");
+
+//    setCookie("uid","794344304838474E4C5A46585633514263744A4C5F495A766869625574356B306E4E47726331363273456565694E365643675A593461745A5937746D787352466D5A43747833314A516D727041756452386C494F45672E2E");
+//    setCookie("deviceType","2");
+    console.log(document.cookie);
+    $("#btn").on("click", function () {
+        window.location.href="http://wgy.daxmall.com:8080/html/liveShopping/productShow.html?mallId=264443616"
+    });
+</script>
+</body>
+</html>

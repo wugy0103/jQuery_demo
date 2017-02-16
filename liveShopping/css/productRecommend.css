@@ -8,6 +8,13 @@
 .mui-scroll {
      position: static;
 }
+h1 {
+    padding: 0;
+    margin: 0;
+    line-height: 4rem;
+    font-weight: bold;
+}
+
 /*头部*/
 header,nav {
     height: 4rem;
@@ -23,8 +30,24 @@ header,nav {
     overflow: hidden;
 }
 
+header a.return {
+    position: absolute;
+    left: 0;
+    padding:0 1.5rem;
+    -webkit-transform: scaleY(2);
+    transform: scaleY(2);
+    margin-top: -0.2rem;
+}
+header a.sync {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding:0 1.5rem;
+    font-size: 1.2rem;
+}
+
 nav {
-    top: 0rem;
+    top: 4rem;
     left: 0;
 
 }
@@ -38,12 +61,6 @@ nav {
     height: 2rem;
     line-height: 2rem;
     margin-top: 1rem;
-}
-.shop-nav li:nth-of-type(2){
-    width: 41.66%;
-}
-.shop-nav li:nth-of-type(3){
-    width: 25%;
 }
 .shop-nav i {
     background: url(../image/sort.png) no-repeat;
@@ -62,8 +79,7 @@ li.down i {
     background: url(../image/sort.png) no-repeat right;
 }
 main {
-    margin-top: 4rem;
-    margin-bottom: 4rem;
+    margin-top: 8rem;
 }
 .noProduct {
     width: 100%;
@@ -90,13 +106,14 @@ main {
 }
 .product-img {
     width: 28%;
+    margin-left: 3%;
     margin-top: 0.5rem;
 }
 .product-img img {
     width: 100%;
 }
 .product-info {
-    width: 57%;
+    width: 62%;
     margin-right: 3%;
 }
 .product-title {
@@ -134,74 +151,24 @@ main {
     font-size: 1.1rem;
     color: #999999;
 }
-
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 3;
-    height: 4rem;
-    line-height: 4rem;
-    font-size: 1.6rem;
-    width: 100%;
-    background: #fff;
-    border-top: 1px solid #F2F2F2;
-}
-footer a {
-    float: left;
-    width: 50%;
-    text-align: center;
-}
-footer .addProd {
-
-    width: 100%;
-    background: #FFFFFF;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.50);
-    color: #B9B9B9;
-
-}
-footer .addProd.enabled {
-    background: #33C774;
-    color:#ffffff;
-}
-.product-check {
-    overflow: hidden;
-    float: left;
+.recommendBtn {
+    border: 1px solid #33C774;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    padding-left: 3rem;
     position: relative;
-    width: 10%;
-    height: 12rem;
 }
-.product-check input {
+.recommendBtn::before {
+    content: '';
     position: absolute;
-    width: 1.42857143rem;
-    height: 1.42857143rem;
-    opacity: 0;
-    z-index: 999;
-    left: 0;
+    background:url("../image/recommend@2x.png") no-repeat;
+    -webkit-background-size: 1.5rem;
+    background-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
     top: 0;
-    right: 0;
     bottom: 0;
     margin: auto;
-}
-.checkbox + label {
-    background-color: #FFF;
-    border: 1px solid #C1CACA;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    width: 1.42857143rem;
-    height: 1.42857143rem;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-}
-.checkbox:checked + label {
-    width: 1.42857143rem;
-    height: 1.42857143rem;
-    background: url(../image/selected@3x.png) no-repeat;
-    background-size: 1.42857143rem 1.42857143rem;
-    color: #243441;
-    border: none;
+    margin-left: -2rem;
 }
