@@ -103,9 +103,6 @@ function ajaxSuccess (url,type,params,callback,muiCallback) {
                                 },
                                 error: function (err) {
                                     console.log(err)
-                                    if (err.responseURL) {
-                                        window.location.href = err.responseURL;
-                                    }
                                 }
                             })
                             //注意：
@@ -119,9 +116,6 @@ function ajaxSuccess (url,type,params,callback,muiCallback) {
         },
         error: function (err) {
             console.log(err)
-            if (err.responseURL) {
-                window.location.href = err.responseURL;
-            }
         }
     })
 

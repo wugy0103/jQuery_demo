@@ -84,8 +84,9 @@
         //设置cookie
         var uid = getCookie("uid");
         var device = getCookie("deviceType");
-        setCookie("uid",uid,"daxmall.com");
-        setCookie("deviceType",device,"daxmall.com");
+        alert(uid)
+        setCookie("uid",uid,".daxmall.com");
+        setCookie("deviceType",device,".daxmall.com");
         var params = {
             addtimeOrder:"desc"
         };

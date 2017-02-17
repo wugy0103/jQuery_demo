@@ -34,7 +34,7 @@
 </head>
 <body>
 <div class="layout">
-    <nav >
+    <nav>
         <ul class="shop-nav">
             <li class="down allClass">全部类目<i></i></li>
             <li></li>
@@ -46,6 +46,17 @@
         <div class="mui-scroll" id="mui-scroll">
 
         </div>
+        <section id="dropdown" class="dropdown">
+            <ul class="list list1">
+
+            </ul>
+            <ul class="list list2">
+
+            </ul>
+            <ul class="list list3">
+
+            </ul>
+        </section>
     </main>
     <!-- 内容 end -->
     <footer>
@@ -55,17 +66,19 @@
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
-        <div class="product-check"><input type="checkbox" class="checkbox" name="checkbox" value="{{prod.productId}}"><label for="checkbox_a2"></label></div>
+        <div class="product-check"><input type="checkbox" class="checkbox" name="checkbox"
+                                          value="{{prod.productId}}"><label for="checkbox_a2"></label></div>
         <a href="{{prod.prodUrl}}" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
         </a>
+
         <div class="fr product-info">
             <h3 class="product-title"><a href="{{prod.prodUrl}}">{{prod.title}}</a></h3>
 
             <div class="buyinfo clearfix">
                 <div class="fl">
                     <div class="price"><b>￥{{prod.promotionPrice}}</b><span>佣金比率：<i>{{prod.price}}</i></span></div>
-                    <div class="peopleNum">销量: {{prod.buys}}  库存: {{prod.stocks}}  收藏: {{prod.favorite}} </div>
+                    <div class="peopleNum">销量: {{prod.buys}} 库存: {{prod.stocks}} 收藏: {{prod.favorite}}</div>
                 </div>
             </div>
         </div>
@@ -73,6 +86,7 @@
     {{/each}}
 </script>
 <script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/fx.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
 <script src="js/lib/mui.min.js"></script>
@@ -81,44 +95,44 @@
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
-        var type=getQueryString("type");
+        var type = getQueryString("type");
         var params = {};
         var reqUrl;
         var handerUrl;
-        if(type=="add"){
+        if (type == "add") {
             $(".addProd").html("添加已选商品")
             reqUrl = "/liveshoppingManage/getNotInLiveshoppingProdList";
             handerUrl = "/liveshoppingManage/addDistProd";
-        }else if(type=="del") {
+        } else if (type == "del") {
             $(".addProd").html("删除已选商品")
             reqUrl = "/liveshoppingManage/getInLiveshoppingProdList";
             handerUrl = "/liveshoppingManage/removeDistProd";
-            params.addtimeOrder="desc";
+            params.addtimeOrder = "desc";
         }
 //        复选框
-        $(".layout").on("click","input",function () {
-            if($(".checkbox:checked").size()!=0){
+        $(".layout").on("click", "input", function () {
+            if ($(".checkbox:checked").size() != 0) {
                 $(".addProd").addClass("enabled");
-            }else{
+            } else {
                 $(".addProd").removeClass("enabled");
             }
         })
-        $(".layout").on("click",".enabled",function () {
-            params={};
+        $(".layout").on("click", ".enabled", function () {
+            params = {};
             params.prodIdArr = [];
             $(".checkbox:checked").each(function (i) {
-                params.prodIdArr[i]=$(this).val();
+                params.prodIdArr[i] = $(this).val();
             });
-            params.prodIdArr=params.prodIdArr.join(",");
+            params.prodIdArr = params.prodIdArr.join(",");
             $.ajax({
-                url:handerUrl,
+                url: handerUrl,
                 type: "POST",
                 data: params,
                 dataType: "json",
                 success: function (data) {
-                    if(data.code==1){
-                        window.location.href="/html/liveShopping/productSelect.html";
-                    }else {
+                    if (data.code == 1) {
+                        window.location.href = "/html/liveShopping/productSelect.html";
+                    } else {
                         alert(data.msg);
                     }
                 },
@@ -129,22 +143,37 @@
         })
         $(".allClass").on("click", function () {
             $.ajax({
-                url:"",
-                type: "POST",
-                data: params,
+                url: "/categoryListJson",
+                type: "GET",
                 dataType: "json",
                 success: function (data) {
+                    console.log(data);
+                    var list1Html="";
+                    var list2Html="";
+                    var list3Html="";
+                    $.each(data, function (i) {
+                        list1Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
+                    })
 
+                    $('.list1').html(list1Html);
+                    $("#dropdown").show();
+
+                    $(".list1").slideDown(300);
+                    params.categoryId = "";
+                    ajaxSuccess(reqUrl, "POST", params);
                 },
                 error: function (err) {
                     console.log(err)
                 }
             })
         })
-        ajaxSuccess(reqUrl,"POST",params);
-        connectWebViewJavascriptBridge(function(bridge) {
-            bridge.registerHandler('getProductListCallback', function(){
-                ajaxSuccess(reqUrl,params);
+        $(".list1").on("click", function (e) {
+            console.log($(e.target).scrollTop());
+        })
+        ajaxSuccess(reqUrl, "POST", params);
+        connectWebViewJavascriptBridge(function (bridge) {
+            bridge.registerHandler('getProductListCallback', function () {
+                ajaxSuccess(reqUrl, params);
             });
         });
     })

@@ -174,8 +174,8 @@ footer .addProd.enabled {
 }
 .product-check input {
     position: absolute;
-    width: 1.42857143rem;
-    height: 1.42857143rem;
+    width: 2rem;
+    height: 2rem;
     opacity: 0;
     z-index: 999;
     left: 0;
@@ -190,8 +190,8 @@ footer .addProd.enabled {
     border-radius: 50%;
     display: inline-block;
     position: absolute;
-    width: 1.42857143rem;
-    height: 1.42857143rem;
+    width: 2rem;
+    height: 2rem;
     left: 0;
     top: 0;
     right: 0;
@@ -199,10 +199,36 @@ footer .addProd.enabled {
     margin: auto;
 }
 .checkbox:checked + label {
-    width: 1.42857143rem;
-    height: 1.42857143rem;
+    width: 2rem;
+    height: 2rem;
     background: url(../image/selected@3x.png) no-repeat;
-    background-size: 1.42857143rem 1.42857143rem;
+    background-size: 2rem 2rem;
     color: #243441;
     border: none;
+}
+.dropdown {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    background: rgba(0,0,0,0.5);
+    display: none;
+}
+.dropdown .list {
+    background: #ffffff;
+    width: 33.33%;
+    border-right:1px solid #ccc;
+    float: left;
+
+}
+.dropdown .list li {
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 3rem;
+    border-bottom: 1px solid #ccc;
+}
+.dropdown .list li.on {
+    color: #2ac845;
 }
