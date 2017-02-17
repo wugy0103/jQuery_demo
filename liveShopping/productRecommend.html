@@ -55,7 +55,7 @@
 </div>
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
-    <div class="product-box clearfix">
+    <div class="product-box clearfix" >
         <a href="{{prod.prodUrl}}" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
         </a>
@@ -67,7 +67,7 @@
                     <div class="price"><b>￥{{prod.promotionPrice}}</b></div>
                     <div class="peopleNum">销量: {{prod.buys}}  库存: {{prod.stocks}}  收藏: {{prod.favorite}} </div>
                 </div>
-                <a href="#" class="fr recommendBtn main-color">推荐</a>
+                <a href="javascript:;" data-picUrl="{{prod.picUrl}}" data-title="{{prod.title}}" data-promotionPrice="{{prod.promotionPrice}}" data-productId="{{prod.productId}}" class="fr recommendBtn main-color">推荐</a>
             </div>
         </div>
     </div>
@@ -77,119 +77,61 @@
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
 <script src="js/lib/mui.min.js"></script>
+<script src="js/common.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
+        //设置cookie
+        var uid = getCookie("uid");
+        var device = getCookie("deviceType");
+        setCookie("uid",uid,"daxmall.com");
+        setCookie("deviceType",device,"daxmall.com");
         var params = {
             addtimeOrder:"desc"
         };
-        getProductList(params,callback);
-//        判断有没有直播商品
-        function callback(){
-            if($(".product-box").size()==0){
-                $("#mui-scroll").addClass("noProduct");
-            }else {
-                $(".allManage").css("display","block");
-                $(".addProd").width("50%");
-            }
-        }
+        ajaxSuccess("/liveshoppingManage/getInLiveshoppingProdList","POST",params);
 //        排序
         $(".shop-nav li").on('click', function() {
             var field = $(this).find("i").data("field");
+            params = {};
             if ($(this).hasClass("up")) {
                 $(this).removeClass("up").addClass('down');
                 params[field] = "desc";
-                getProductList(params);
             } else if ($(this).hasClass("down")) {
                 $(this).removeClass("down").addClass('up');
                 params[field] = "asc";
-                getProductList(params);
             } else {
                 $(".shop-nav li").removeClass("down").removeClass("up");
-                params={};
                 $(this).addClass('down');
                 params[field] = "desc";
-                getProductList(params);
             }
+            ajaxSuccess("/liveshoppingManage/getInLiveshoppingProdList","POST",params);
         });
-//        同步动力店
-        $("#sync").on("click", function () {
-            $.ajax({
-                url:"/liveshoppingManage/synShopProd",
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    if(data.code==1){
-                        window.location.reload();
-                    }else {
-                        alert(data.msg);
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            })
+        $(".return").on("click", function () {
+            window.history.back();
         })
-//        加载
-        function getProductList(params,callback){
-            $.ajax({
-                url: "data/productSelect.json",
-                type: "GET",
-                data: params,
-                dataType: "json",
-                success: function (data) {
-                    var data = data;
-                    console.log(data);
-                    var html = template('product-box', data);
-                    $('#mui-scroll').html(html);
-//                下拉更多
-                    mui.init({
-                        pullRefresh: {
-                            container: "#content",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-                            up: {
-                                height: 0,//可选.默认50.触发上拉加载拖动距离
-                                auto: false,//可选,默认false.自动上拉加载一次
-                                contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-                                contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-                                callback: function () {
-                                    //业务逻辑代码，比如通过ajax从服务器获取新数据；
-                                    params.curPageNO=data.curPageNO+1;
-                                    $.ajax({
-                                        url: "data/productSelect.json",
-                                        type: "GET",
-                                        data: params,
-                                        dataType: "json",
-                                        success: function (pataData) {
-                                            data.curPageNO=pataData.curPageNO
-                                            mui('#content').pullRefresh().endPullupToRefresh(pataData=={});
-                                            var pataData = pataData;
-                                            console.log(pataData);
-                                            var pataHtml = template('product-box', pataData);
-                                            $('#mui-scroll').append(pataHtml);
-                                        },
-                                        error: function (err) {
-                                            console.log(err)
-                                        }
-                                    })
-                                    //注意：
-                                    //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
-                                    //2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
-
-                                }//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-                            }
-                        }
-                    });
-                    callback();
-                },
-                error: function (err) {
-                    console.log(err)
-                }
-
-            })
+        $(".layout").on("click",".recommendBtn", recommend)
+        connectWebViewJavascriptBridge(function(bridge) {
+            bridge.registerHandler('recommendCallback', function(){
+                recommend();
+            });
+        });
+        function recommend(){
+            var json =  {
+                "productId":$(this).data("productid"),
+                "picUrl":$(this).data("picurl"),
+                "title":$(this).data("title"),
+                "promotionPrice":$(this).data("promotionprice")
+            }
+            console.log(json);
+            return {
+                "productId":$(this).data("productid"),
+                "picUrl":$(this).data("picurl"),
+                "title":$(this).data("title"),
+                "promotionPrice":$(this).data("promotionprice")
+            }
         }
-
-
     })
 </script>
 </body>

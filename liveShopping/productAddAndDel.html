@@ -36,7 +36,7 @@
 <div class="layout">
     <nav >
         <ul class="shop-nav">
-            <li class="down">全部类目<i></i></li>
+            <li class="down allClass">全部类目<i></i></li>
             <li></li>
             <li>可分销</li>
         </ul>
@@ -55,7 +55,7 @@
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
-        <div class="product-check"><input type="checkbox" class="checkbox" name="checkbox" value="1909"><label for="checkbox_a2"></label></div>
+        <div class="product-check"><input type="checkbox" class="checkbox" name="checkbox" value="{{prod.productId}}"><label for="checkbox_a2"></label></div>
         <a href="{{prod.prodUrl}}" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
         </a>
@@ -75,9 +75,8 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<script src="js/h5toiosapp.js"></script>
-<script src="js/common.js"></script>
 <script src="js/lib/mui.min.js"></script>
+<script src="js/common.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
@@ -105,87 +104,49 @@
             }
         })
         $(".layout").on("click",".enabled",function () {
+            params={};
+            params.prodIdArr = [];
+            $(".checkbox:checked").each(function (i) {
+                params.prodIdArr[i]=$(this).val();
+            });
+            params.prodIdArr=params.prodIdArr.join(",");
             $.ajax({
                 url:handerUrl,
                 type: "POST",
                 data: params,
                 dataType: "json",
-                success: function (data) {},
-                error: function (err) {
-
-                }
-            })
-        })
-        getProductList(reqUrl,params);
-        connectWebViewJavascriptBridge(function(bridge) {
-            bridge.registerHandler('getProductListCallback', function(){
-                getProductList(reqUrl,params);
-            });
-        });
-//        加载
-        function getProductList(reqUrl,params){
-            $.ajax({
-                url: reqUrl,
-                type: "POST",
-                data: params,
-                dataType: "json",
                 success: function (data) {
-                    var data = data;
-                    console.log(data);
-                    var html = template('product-box', data);
-                    $('#mui-scroll').html(html);
-//                下拉更多
-                    mui.init({
-                        pullRefresh: {
-                            container: "#content",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-                            up: {
-                                height: 0,//可选.默认50.触发上拉加载拖动距离
-                                auto: false,//可选,默认false.自动上拉加载一次
-                                contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-                                contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-                                callback: function () {
-                                    //业务逻辑代码，比如通过ajax从服务器获取新数据；
-                                    params.curPageNO=data.curPageNO+1;
-                                    $.ajax({
-                                        url: reqUrl,
-                                        type: "POST",
-                                        data: params,
-                                        dataType: "json",
-                                        success: function (pataData) {
-                                            data.curPageNO=pataData.curPageNO;
-                                            mui('#content').pullRefresh().endPullupToRefresh(!pataData.prodList);
-                                            var pataData = pataData;
-                                            console.log(pataData);
-                                            var pataHtml = template('product-box', pataData);
-                                            $('.mui-pull-bottom-pocket').before(pataHtml);
-                                        },
-                                        error: function (err) {
-                                            console.log(err)
-                                        }
-                                    })
-                                    //注意：
-                                    //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
-                                    //2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
-
-                                }//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-                            }
-                        }
-                    });
+                    if(data.code==1){
+                        window.location.href="/html/liveShopping/productSelect.html";
+                    }else {
+                        alert(data.msg);
+                    }
                 },
                 error: function (err) {
                     console.log(err)
                 }
-
             })
-        }
-        //        获取url参数值
-        function getQueryString(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]);
-            return null;
-        }
+        })
+        $(".allClass").on("click", function () {
+            $.ajax({
+                url:"",
+                type: "POST",
+                data: params,
+                dataType: "json",
+                success: function (data) {
 
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+        })
+        ajaxSuccess(reqUrl,"POST",params);
+        connectWebViewJavascriptBridge(function(bridge) {
+            bridge.registerHandler('getProductListCallback', function(){
+                ajaxSuccess(reqUrl,params);
+            });
+        });
     })
 </script>
 </body>

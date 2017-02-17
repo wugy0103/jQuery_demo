@@ -74,23 +74,22 @@
 </script>
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
-<script src="js/lib/zepto.cookie.min.js"></script>
 <script src="js/lib/template.js"></script>
-<script src="js/h5toiosapp.js"></script>
 <script src="js/lib/mui.min.js"></script>
+<script src="js/common.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
         //设置cookie
-        var uid = $.fn.cookie("uid");
-        var device = $.fn.cookie("deviceType");
-        $.fn.cookie("uid",uid,{domain:"daxmall.com",path:"/"});
-        $.fn.cookie("deviceType",device,{domain:"daxmall.com",path:"/"});
+        var uid = getCookie("uid");
+        var device = getCookie("deviceType");
+        setCookie("uid",uid,"daxmall.com");
+        setCookie("deviceType",device,"daxmall.com");
         var params = {
             addtimeOrder:"desc"
         };
-        getProductList(params,callback);
+        ajaxSuccess("/liveshoppingManage/getInLiveshoppingProdList","POST",params,callback);
 //        判断有没有直播商品
         function callback(){
             if($(".product-box").size()==0){
@@ -115,7 +114,7 @@
                 $(this).addClass('down');
                 params[field] = "desc";
             }
-            getProductList(params);
+            ajaxSuccess("/liveshoppingManage/getInLiveshoppingProdList","POST",params);
         });
 //        同步动力店
         connectWebViewJavascriptBridge(function(bridge) {
@@ -136,67 +135,10 @@
                     }
                 },
                 error: function (err) {
-                    console.log(err);
+                    console.log(err)
                 }
             })
         }
-//        加载
-        function getProductList(params,callback){
-            $.ajax({
-                url: "/liveshoppingManage/getInLiveshoppingProdList",
-                type: "GET",
-                data: params,
-                dataType: "json",
-                success: function (data) {
-
-                    var data = data;
-                    console.log(data);
-                    var html = template('product-box', data);
-                    $('#mui-scroll').html(html);
-//                下拉更多
-                    mui.init({
-                        pullRefresh: {
-                            container: "#content",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-                            up: {
-                                height: 0,//可选.默认50.触发上拉加载拖动距离
-                                auto: false,//可选,默认false.自动上拉加载一次
-                                contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-                                contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-                                callback: function () {
-                                    //业务逻辑代码，比如通过ajax从服务器获取新数据；
-                                    params.curPageNO=data.curPageNO+1;
-                                    $.ajax({
-                                        url: "/liveshoppingManage/getInLiveshoppingProdList",
-                                        type: "GET",
-                                        data: params,
-                                        dataType: "json",
-                                        success: function (pataData) {
-                                            console.log(pataData);
-                                            data.curPageNO=pataData.curPageNO
-                                            mui('#content').pullRefresh().endPullupToRefresh(!pataData.prodList);
-                                            var pataData = pataData;
-                                            var pataHtml = template('product-box', pataData);
-                                            $('.mui-pull-bottom-pocket').before(pataHtml);
-                                        },
-                                        error: ajaxError(err)
-                                    })
-                                    //注意：
-                                    //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
-                                    //2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
-
-                                }//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-                            }
-                        }
-                    });
-                    if(callback)callback();
-                },
-                error: ajaxError(err)
-
-            })
-        }
-
-
-
     })
 </script>
 </body>
