@@ -2,40 +2,35 @@
  * Created by wugy on 2017/2/16.
  */
 //app交互
+function isIOS() {
+    //判断是否为IOS
+    return navigator.platform === 'iPhone' ||
+        navigator.platform === 'iPad' ||
+        navigator.platform === 'iPod' ||
+        navigator.platform === 'iPhone Simulator' ||
+        navigator.platform === 'iPad Simulator' ||
+        navigator.platform === 'iPod Simulator' ||
+        navigator.platform === 'iPod touch' ||
+        navigator.platform === 'iPod Touch';
+}
 function connectWebViewJavascriptBridge(callback) {
     if (window.WebViewJavascriptBridge) {
         callback(WebViewJavascriptBridge);
     } else {
-        document.addEventListener('WebViewJavascriptBridgeReady', function() {
+        document.addEventListener('WebViewJavascriptBridgeReady', function () {
             callback(WebViewJavascriptBridge);
         }, false);
     }
 }
-// 初始化与iOS交互插件
-connectWebViewJavascriptBridge(function(bridge) {
-    bridge.init(function(message, responseCallback) {
-        var data = { 'Javascript Responds':'Wee!' };
+connectWebViewJavascriptBridge(function (bridge) {
+    bridge.init(function (message, responseCallback) {
+        // 初始化与iOS交互插件
+        var data = { 'Javascript Responds': 'Wee!' }
+        //alert("与IOS交互啦");
         responseCallback(data);
     });
 });
 
-function isIOS() {
-    return navigator.platform.indexOf("iPhone")>-1 || navigator.platform.indexOf("iPad")>-1 || navigator.platform.indexOf("iPod")>-1;
-}
-
-function callIosApp(imgUrl,title,des,link){
-    var data=null;
-    connectWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler("isAppOpen", data, function(response) { // 回调
-            data = {'imgUrl':imgUrl,'title':title,'des':des,'url':link};
-            bridge.callHandler('mallShare', data, function(response) {
-                return true;
-            });
-        });
-        return true;
-    });
-    return false;
-}
 // 获取url参数值
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

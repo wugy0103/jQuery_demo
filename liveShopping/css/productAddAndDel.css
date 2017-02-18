@@ -74,7 +74,7 @@ main {
     background-size: 60%;
 }
 .noProduct::after {
-    content: '暂无直播商品...';
+    content: '商品陆续上架 敬请期待';
     position: absolute;
     bottom: 5rem;
     left: 50%;
@@ -217,16 +217,18 @@ footer .addProd.enabled {
     display: none;
 }
 .dropdown .list {
-    background: #ffffff;
     width: 33.33%;
-    border-right:1px solid #ccc;
     float: left;
-
+}
+.list2 {
+    height: 100% !important;
 }
 .dropdown .list li {
+    border-right:1px solid #ccc;
+    background: #ffffff;
     text-align: center;
-    font-size: 1.3rem;
-    line-height: 3rem;
+    font-size: 16px;
+    line-height: 40px;
     border-bottom: 1px solid #ccc;
 }
 .dropdown .list li.on {

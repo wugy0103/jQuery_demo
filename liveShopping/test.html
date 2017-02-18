@@ -35,6 +35,53 @@
     $("#btn").on("click", function () {
         window.location.href="http://wgy.daxmall.com:8080/html/liveShopping/productSelect.html"
     });
+
+    showLoginPanel: function(){
+        //调出登陆框
+        if (isIOS()) {
+            supply.connectWebViewJavascriptBridge(function(bridge) {
+                bridge.callHandler('H5ArouseAppLogin', null, function(response) {
+                    if (response) {
+                        window.location.reload();
+                    }
+                });
+            });
+        } else if(window.android) {
+            window.mallLoginCallback = function (status, token){
+                window.location.reload();
+            }
+            window.android.mallToLogin();
+        }else{
+            alert("请在健康猫APP打开！");
+        }
+    },
+    connectWebViewJavascriptBridge: function(callback){
+        if (window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge);
+        } else {
+            document.addEventListener('WebViewJavascriptBridgeReady', function () {
+                callback(WebViewJavascriptBridge);
+            }, false);
+        }
+    },
+    initAppBridge: function(){
+        //初始化和app交互方法，初始化成功返回true
+        var isAppOpen = false;
+        supply.connectWebViewJavascriptBridge(function (bridge) {
+            bridge.init(function (message, responseCallback) {
+                // 初始化与iOS交互插件
+                var data = { 'Javascript Responds': 'Wee!' }
+                //alert("与IOS交互啦");
+                responseCallback(data);
+            });
+        });
+
+        //判断是否app打开
+        if(window.android!=undefined || getCookie("deviceType")){
+            isAppOpen = true;
+        }
+        return isAppOpen;
+    },
 </script>
 </body>
 </html>

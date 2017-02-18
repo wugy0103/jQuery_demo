@@ -109,6 +109,12 @@
             handerUrl = "/liveshoppingManage/removeDistProd";
             params.addtimeOrder = "desc";
         }
+        ajaxSuccess(reqUrl, "POST", params,callback);
+        function callback(){
+            if($(".product-box").size()==0){
+                $("#mui-scroll").addClass("noProduct");
+            }
+        }
 //        复选框
         $(".layout").on("click", "input", function () {
             if ($(".checkbox:checked").size() != 0) {
@@ -141,41 +147,85 @@
                 }
             })
         })
+//        类目操作
+        var allClassFlag = false;
+        var categoryListJson;
+        var list1Html="";
+        var list2Html="";
+        var list3Html="";
         $(".allClass").on("click", function () {
-            $.ajax({
-                url: "/categoryListJson",
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    var list1Html="";
-                    var list2Html="";
-                    var list3Html="";
+            if(allClassFlag == false){
+                allClassFlag = true;
+                $.ajax({
+                    url: "/categoryListJson",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        categoryListJson = data
+                        $.each(categoryListJson, function (i) {
+                            list1Html += "<li data-id='"+categoryListJson[i].id+"'>"+categoryListJson[i].name+"</li>";
+                        })
+                        $('.list1').html(list1Html);
+                        $("#dropdown").show();
+                        $(".list1").slideDown(200);
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            }else {
+                allClassColse()
+            }
+
+        })
+        $(".list1").on("click","li", function (e) {
+            if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                var i =$(this).index();
+                var data=categoryListJson[i].child;
+                if(!!data[0]){
+                    $(".on").removeClass("on");
+                    $(this).addClass("on");
+                    list2Html="";
+                    $('.list2').html("");
                     $.each(data, function (i) {
-                        list1Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
+                        list2Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
                     })
-
-                    $('.list1').html(list1Html);
-                    $("#dropdown").show();
-
-                    $(".list1").slideDown(300);
-                    params.categoryId = "";
-                    ajaxSuccess(reqUrl, "POST", params);
-                },
-                error: function (err) {
-                    console.log(err)
+                    $('.list2').html(list2Html).css({
+                        marginTop:i*41+"px"
+                    }).slideDown(1000);
+                }else {
+                    allClassAjax($(this))
                 }
-            })
+            }
         })
-        $(".list1").on("click", function (e) {
-            console.log($(e.target).scrollTop());
-        })
-        ajaxSuccess(reqUrl, "POST", params);
-        connectWebViewJavascriptBridge(function (bridge) {
-            bridge.registerHandler('getProductListCallback', function () {
-                ajaxSuccess(reqUrl, params);
+        function allClassColse(){
+            $("#dropdown").hide();
+            allClassFlag = false;
+            list1Html="";
+            list2Html="";
+            list3Html="";
+            $('.list1').html("");
+            $('.list2').html("");
+            $('.list3').html("");
+        }
+        function allClassAjax(li){
+            params.categoryId=li.data("id");
+            allClassColse();
+            ajaxSuccess(reqUrl, "POST", params,callback);
+        }
+//        app交互
+        if (isIOS()) {
+            connectWebViewJavascriptBridge(function (bridge) {
+                bridge.registerHandler('getProductList', function (data) {
+                    getProductList(data);
+                });
             });
-        });
+        }
+        function getProductList(data){
+            params.name=data;
+            ajaxSuccess(reqUrl,"POST", params,callback);
+        }
     })
 </script>
 </body>

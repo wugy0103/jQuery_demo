@@ -84,7 +84,6 @@
         //设置cookie
         var uid = getCookie("uid");
         var device = getCookie("deviceType");
-        alert(uid)
         setCookie("uid",uid,".daxmall.com");
         setCookie("deviceType",device,".daxmall.com");
         var params = {
@@ -98,31 +97,36 @@
             }else {
                 $(".allManage").css("display","block");
                 $(".addProd").width("50%");
+                //        排序
+                $(".shop-nav li").on('click', function() {
+                    var field = $(this).find("i").data("field");
+                    params = {};
+                    if ($(this).hasClass("up")) {
+                        $(this).removeClass("up").addClass('down');
+                        params[field] = "desc";
+                    } else if ($(this).hasClass("down")) {
+                        $(this).removeClass("down").addClass('up');
+                        params[field] = "asc";
+                    } else {
+                        $(".shop-nav li").removeClass("down").removeClass("up");
+                        $(this).addClass('down');
+                        params[field] = "desc";
+                    }
+                    ajaxSuccess("/liveshoppingManage/getInLiveshoppingProdList","POST",params);
+                });
             }
         }
-//        排序
-        $(".shop-nav li").on('click', function() {
-            var field = $(this).find("i").data("field");
-            params = {};
-            if ($(this).hasClass("up")) {
-                $(this).removeClass("up").addClass('down');
-                params[field] = "desc";
-            } else if ($(this).hasClass("down")) {
-                $(this).removeClass("down").addClass('up');
-                params[field] = "asc";
-            } else {
-                $(".shop-nav li").removeClass("down").removeClass("up");
-                $(this).addClass('down');
-                params[field] = "desc";
-            }
-            ajaxSuccess("/liveshoppingManage/getInLiveshoppingProdList","POST",params);
-        });
+
 //        同步动力店
-        connectWebViewJavascriptBridge(function(bridge) {
-            bridge.registerHandler('synShopProdCallback', function(){
-                synShopProd();
+        if (isIOS()) {
+            connectWebViewJavascriptBridge(function (bridge) {
+                //APP获取试卷所有信息
+                bridge.registerHandler('synShopProd', function () {
+                    synShopProd();
+                });
+
             });
-        });
+        }
         function synShopProd(){
             $.ajax({
                 url:"/liveshoppingManage/synShopProd",
