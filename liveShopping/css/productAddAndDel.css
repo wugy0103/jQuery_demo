@@ -140,7 +140,7 @@ footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 3;
+    z-index: 0;
     height: 4rem;
     line-height: 4rem;
     font-size: 1.6rem;
@@ -220,7 +220,7 @@ footer .addProd.enabled {
     width: 33.33%;
     float: left;
 }
-.list2 {
+.list2,.list3 {
     height: 100% !important;
 }
 .dropdown .list li {

@@ -113,6 +113,9 @@
         function callback(){
             if($(".product-box").size()==0){
                 $("#mui-scroll").addClass("noProduct");
+            }else {
+                $(".noProduct").removeClass("noProduct");
+
             }
         }
 //        复选框
@@ -187,7 +190,10 @@
                     $(".on").removeClass("on");
                     $(this).addClass("on");
                     list2Html="";
+                    list3Html="";
                     $('.list2').html("");
+                    $('.list3').html("");
+                    $('.list2').data("index",i);
                     $.each(data, function (i) {
                         list2Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
                     })
@@ -197,6 +203,32 @@
                 }else {
                     allClassAjax($(this))
                 }
+            }
+        })
+        $(".list2").on("click","li", function (e) {
+            if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                var index = $(".list2").data("index")
+                var i =$(this).index();
+                var data=categoryListJson[index].child[i].child;
+                if(!!data[0]){
+                    $(".on").removeClass("on");
+                    $(this).addClass("on");
+                    list3Html="";
+                    $('.list3').html("");
+                    $.each(data, function (i) {
+                        list3Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
+                    })
+                    $('.list3').html(list3Html).css({
+                        marginTop:index*41+i*41+"px"
+                    }).slideDown(200);
+                }else {
+                    allClassAjax($(this))
+                }
+            }
+        })
+        $(".list3").on("click","li", function (e) {
+            if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                    allClassAjax($(this))
             }
         })
         function allClassColse(){

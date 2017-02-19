@@ -111,27 +111,25 @@
         $(".return").on("click", function () {
             window.history.back();
         })
-        $(".layout").on("click",".recommendBtn", recommend)
-        connectWebViewJavascriptBridge(function(bridge) {
-            bridge.registerHandler('recommendCallback', function(){
-                recommend();
-            });
-        });
-        function recommend(){
+//        调app方法
+        $(".layout").on("click",".recommendBtn", function () {
             var json =  {
                 "productId":$(this).data("productid"),
                 "picUrl":$(this).data("picurl"),
                 "title":$(this).data("title"),
                 "promotionPrice":$(this).data("promotionprice")
             }
-            console.log(json);
-            return {
-                "productId":$(this).data("productid"),
-                "picUrl":$(this).data("picurl"),
-                "title":$(this).data("title"),
-                "promotionPrice":$(this).data("promotionprice")
+            if(isIOS()){
+                connectWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('recommend', json, function (responedata) {
+                    });
+                });
+            }else if(window.android) {
+                window.android.recommend(json);
+            }else{
+                alert("请在健康猫APP打开！");
             }
-        }
+        })
     })
 </script>
 </body>
