@@ -27,8 +27,8 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
-    <title>添加/删除直播商品</title>
-    <link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">
+    <title>直播商品</title>
+    <!--<link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productAddAndDel.css">
 </head>
@@ -89,7 +89,7 @@
 <script src="js/lib/fx.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<script src="js/lib/mui.min.js"></script>
+<!--<script src="js/lib/mui.min.js"></script>-->
 <script src="js/common.js"></script>
 <script>
     $(function () {
@@ -103,19 +103,21 @@
             $(".addProd").html("添加已选商品")
             reqUrl = "/liveshoppingManage/getNotInLiveshoppingProdList";
             handerUrl = "/liveshoppingManage/addDistProd";
+            $("title").html("添加直播商品");
         } else if (type == "del") {
             $(".addProd").html("删除已选商品")
             reqUrl = "/liveshoppingManage/getInLiveshoppingProdList";
             handerUrl = "/liveshoppingManage/removeDistProd";
             params.addtimeOrder = "desc";
+            $("title").html("删除直播商品");
         }
+
         ajaxSuccess(reqUrl, "POST", params,callback);
         function callback(){
             if($(".product-box").size()==0){
                 $("#mui-scroll").addClass("noProduct");
             }else {
                 $(".noProduct").removeClass("noProduct");
-
             }
         }
 //        复选框
@@ -138,6 +140,7 @@
                 type: "POST",
                 data: params,
                 dataType: "json",
+                async:false,
                 success: function (data) {
                     if (data.code == 1) {
                         window.location.href = "/html/liveShopping/productSelect.html";
@@ -163,6 +166,7 @@
                     url: "/categoryListJson",
                     type: "GET",
                     dataType: "json",
+                    async:false,
                     success: function (data) {
                         console.log(data);
                         categoryListJson = data
@@ -175,12 +179,12 @@
                     },
                     error: function (err) {
                         console.log(err)
+                        alert("请求错误"+err)
                     }
                 })
             }else {
                 allClassColse()
             }
-
         })
         $(".list1").on("click","li", function (e) {
             if(e.target && e.target.nodeName.toUpperCase() == "LI") {
@@ -197,9 +201,9 @@
                     $.each(data, function (i) {
                         list2Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
                     })
-                    $('.list2').html(list2Html).css({
-                        marginTop:i*41+"px"
-                    }).slideDown(1000);
+//                    $('.list2').html(list2Html).css({
+//                        marginTop:i*41+"px"
+//                    }).slideDown(1000);
                 }else {
                     allClassAjax($(this))
                 }
@@ -247,17 +251,22 @@
             ajaxSuccess(reqUrl, "POST", params,callback);
         }
 //        app交互
+        callApp("setTBSearchButton",{isShow: true});
         if (isIOS()) {
             connectWebViewJavascriptBridge(function (bridge) {
-                bridge.registerHandler('getProductList', function (data) {
-                    getProductList(data);
+                bridge.registerHandler("requestSearch", function (data, responseCallback) {
+                    responseCallback(requestSearch(data));
                 });
+
             });
         }
-        function getProductList(data){
-            params.name=data;
+        window.requestSearch = function(data){
+            alert(data)
+            alert(JSON.stringify(data))
+            params.name=data.name;
             ajaxSuccess(reqUrl,"POST", params,callback);
         }
+
     })
 </script>
 </body>

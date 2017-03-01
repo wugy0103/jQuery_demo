@@ -28,7 +28,7 @@
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
     <title>商品展示</title>
-    <link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productShow.css">
 </head>
@@ -36,7 +36,7 @@
 <div class="layout">
     <header class="clearfix">
         <div class="fl">全部宝贝</div>
-        <a href="/p/userOrder" class="fr">我的订单</a>
+        <a href="/p/userOrder?isLiveShopping=1" class="fr">我的订单</a>
     </header>
     <!-- 内容 start -->
     <main id="content" class="mui-content mui-scroll-wrapper">
@@ -51,18 +51,17 @@
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
-        <a href="{{prod.prodUrl}}" class="fl product-img">
+        <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
         </a>
         <div class="fr product-info">
-            <h3 class="product-title"><a href="{{prod.prodUrl}}">{{prod.title}}</a></h3>
-
+            <h3 class="product-title"><a href="{{prod.prodUrl}}?isLiveShopping=1">{{prod.title}}</a></h3>
             <div class="buyinfo clearfix">
                 <div class="fl">
                     <div class="price"><b>￥{{prod.promotionPrice}}</b><s>￥{{prod.price}}</s></div>
                     <div class="peopleNum">{{prod.buys}}人已购买</div>
                 </div>
-                <a href="{{prod.prodUrl}}" class="fr buyBtn main-color">去抢购</a>
+                <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fr buyBtn main-color">去抢购</a>
             </div>
         </div>
     </div>
@@ -71,7 +70,7 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<script src="js/lib/mui.min.js"></script>
+<!--<script src="js/lib/mui.min.js"></script>-->
 <script src="js/common.js"></script>
 <script>
     $(function () {

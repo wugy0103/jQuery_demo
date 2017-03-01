@@ -28,7 +28,7 @@
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
     <title>直播商品</title>
-    <link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productSelect.css">
 </head>
@@ -75,7 +75,7 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<script src="js/lib/mui.min.js"></script>
+<!--<script src="js/lib/mui.min.js"></script>-->
 <script src="js/common.js"></script>
 <script>
     $(function () {
@@ -118,22 +118,23 @@
         }
 
 //        同步动力店
+        callApp("setTBRightButton",{text:"同步动力店商品",enable:true});
         if (isIOS()) {
             connectWebViewJavascriptBridge(function (bridge) {
-                //APP获取试卷所有信息
-                bridge.registerHandler('synShopProd', function () {
-                    synShopProd();
+                bridge.registerHandler("notifyTBRightButtonClicked", function (data, responseCallback) {
+                    responseCallback(notifyTBRightButtonClicked());
                 });
 
             });
         }
-        function synShopProd(){
+        window.notifyTBRightButtonClicked = function(){
             $.ajax({
                 url:"/liveshoppingManage/synShopProd",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
                     if(data.code==1){
+                        alert("同步成功！")
                         window.location.reload();
                     }else {
                         alert(data.msg);
@@ -141,6 +142,7 @@
                 },
                 error: function (err) {
                     console.log(err)
+                    alert(err.status+" "+err.statusText+" "+err.readyState+" "+err.responseText)
                 }
             })
         }

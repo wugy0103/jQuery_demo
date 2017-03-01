@@ -66,6 +66,9 @@ a:hover {
     text-decoration: none;
     -webkit-touch-callout: none;
 }
+.button:active {
+    background-color: #33C774 !important;
+}
 
 li,
 ol,
