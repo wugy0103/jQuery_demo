@@ -49,17 +49,17 @@
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
-        <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fl product-img">
+        <a href="{{prod.prodUrl}}&isLiveShopping=1&mallId={{mallId}}" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
         </a>
         <div class="fr product-info">
-            <h3 class="product-title"><a href="{{prod.prodUrl}}?isLiveShopping=1">{{prod.title}}</a></h3>
+            <h3 class="product-title"><a href="{{prod.prodUrl}}&isLiveShopping=1&mallId={{mallId}}">{{prod.title}}</a></h3>
             <div class="buyinfo clearfix">
                 <div class="fl">
                     <div class="price"><b>￥{{prod.promotionPrice}}</b><s>￥{{prod.price}}</s></div>
                     <div class="peopleNum">{{prod.buys}}人已购买</div>
                 </div>
-                <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fr button buyBtn main-color">去抢购</a>
+                <a href="{{prod.prodUrl}}&isLiveShopping=1&mallId={{mallId}}" class="fr button buyBtn main-color">去抢购</a>
             </div>
         </div>
     </div>
@@ -74,14 +74,14 @@
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
-
+        var mallId = getQueryString("mallId")
         var params = {
-            mallId: getQueryString("mallId")
+            mallId: mallId
         }
         function callback(data){
             $("header .fl").data("content",data.prodCount);//在css中，伪元素的content是能读取到data属性的。
         }
-        dropload("/m_search/liveShoppingProdlist","GET",params,true,callback);
+        dropload("/m_search/liveShoppingProdlist","GET",params,true,callback,mallId);
     })
 </script>
 </body>

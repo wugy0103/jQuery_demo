@@ -48,7 +48,7 @@ function H5callApp(func,json,callback){
             callback();
         }
     }else{
-        alert("请在健康猫APP打开！");
+        //alert("请在健康猫APP打开！");
     }
 }
 //app调用h5
@@ -86,7 +86,8 @@ function setCookie(c_name, value,domain, expiredays) {
         ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
 }
 //分页加载
-function dropload(url,type,params,isPaging,callback){
+function dropload(url,type,params,isPaging,callback,mallId){
+    H5callApp("setThePageLoading",{loading:true});
     if(isPaging){
         params.curPageNO = 0;
     }
@@ -112,6 +113,9 @@ function dropload(url,type,params,isPaging,callback){
                 success: function (data) {
                     if(data.prodList){
                         var data = data;
+                        if(mallId){
+                            data.mallId =mallId;
+                        }
                         var html = template('product-box', data);
                         $('.lists').append(html);
                         // 如果没有数据
@@ -126,8 +130,11 @@ function dropload(url,type,params,isPaging,callback){
                     if(!!callback){
                         callback(data);
                     }
+
+                    H5callApp("setThePageLoading",{loading:false});
                 },
                 error: function (err) {
+                    H5callApp("setThePageLoading",{loading:false});
                     console.info(err)
                     alert('Ajax error!'+JSON.stringify(err));
                     // 即使加载出错，也得重置
@@ -139,6 +146,7 @@ function dropload(url,type,params,isPaging,callback){
         }
     });
 }
+var baseUrl = "http://wgy.daxmall.com:8080/p/account/whereIsURL?url=http://wgy.daxmall.com:8080/";
 //mui分页加载
 //function ajaxSuccess (url,type,params,callback,muiCallback,needPage) {
 //    $.ajax({

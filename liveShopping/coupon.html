@@ -84,7 +84,7 @@
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
-//        dropload("/coupon/getDrawCouponList","GET",{},true);
+        H5callApp("setThePageLoading",{loading:true});
         $.ajax({
             url:"/coupon/getDrawCouponList" ,
             type: "GET",
@@ -99,9 +99,10 @@
                 }else{
                     $("#content").addClass("noProduct");
                 }
-
+                H5callApp("setThePageLoading",{loading:false});
             },
             error: function (err) {
+                H5callApp("setThePageLoading",{loading:false});
                 console.info(err)
                 alert('Ajax error!'+JSON.stringify(err));
             }
@@ -161,10 +162,12 @@
                         }
 
                     }else {
+                        H5callApp("setThePageLoading",{loading:false});
                         alert(data.msg)
                     }
                 },
                 error: function (err) {
+                    H5callApp("setThePageLoading",{loading:false});
                     console.info(err)
                     alert(err.status+" "+err.statusText+" "+err.readyState+" "+err.responseText)
                 }

@@ -93,6 +93,7 @@
                 $(".addProd").width("50%");
                 //        排序
                 $(".shop-nav li").on('click', function(e) {
+                    debugger
                     e.preventDefault();
                     var field = $(this).find("i").data("field");
                     params = {};
@@ -108,7 +109,7 @@
                         params[field] = "desc";
                     }
                     //重置前先清空
-//                    $('#content').html('<div class="lists"></div>');
+                    $('#content').html('<div class="lists"></div>');
                     dropload("/liveshoppingManage/getInLiveshoppingProdList","POST",params,true);
                 });
             }
@@ -116,20 +117,14 @@
 
 //        同步动力店
         H5callApp("setTBRightButton",{text:"同步动力店商品",enable:true});
-//        if (isIOS()) {
-//            connectWebViewJavascriptBridge(function (bridge) {
-//                bridge.registerHandler("notifyTBRightButtonClicked", function (data, responseCallback) {
-//                    responseCallback(notifyTBRightButtonClicked());
-//                });
-//
-//            });
-//        }
         IOSCallH5("notifyTBRightButtonClicked");
         window.notifyTBRightButtonClicked = function(){
+            H5callApp("setThePageLoading",{loading:true});
             $.ajax({
                 url:"/liveshoppingManage/synShopProd",
                 type: "GET",
                 dataType: "json",
+                async:false,
                 success: function (data) {
                     if(data.code==1){
                         alert("同步成功！")
@@ -137,13 +132,21 @@
                     }else {
                         alert(data.msg);
                     }
+                    H5callApp("setThePageLoading",{loading:false});
                 },
                 error: function (err) {
+                    H5callApp("setThePageLoading",{loading:false});
                     console.info(err)
                     alert('Ajax error!'+JSON.stringify(err));
                 }
             })
         }
+//        控制app左上角按钮关闭网页
+//        H5callApp("setIsInterceptBack",{isIntercept:true});
+//        IOSCallH5("notifyTBBackClicked");
+//        window.notifyTBBackClicked = function(type){
+//            H5callApp("requestCloseWeb",{});
+//        }
     })
 </script>
 </body>

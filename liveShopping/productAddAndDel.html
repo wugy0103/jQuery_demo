@@ -27,6 +27,11 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+    <meta http-equiv="Pragma" content="no-cache">
+
+    <meta http-equiv="Expires" content="-1">
     <title>直播商品</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productAddAndDel.css">
@@ -126,6 +131,7 @@
             }
         })
         $(".layout").on("click", ".enabled", function () {
+            H5callApp("setThePageLoading",{loading:true});
             params = {};
             params.prodIdArr = [];
             $(".checkbox:checked").each(function (i) {
@@ -139,14 +145,20 @@
                 dataType: "json",
                 async:false,
                 success: function (data) {
+                    H5callApp("setThePageLoading",{loading:false});
+                    debugger
                     if (data.code == 1) {
-                        debugger
                         window.location.href = "/html/liveShopping/productSelect.html";
+//                        H5callApp("startViewToShow",{
+//                            url:baseUrl+"html/liveShopping/productSelect.html",
+//                            isLoadding:true
+//                        });
                     } else {
                         alert(data.msg);
                     }
                 },
                 error: function (err) {
+                    H5callApp("setThePageLoading",{loading:false});
                     console.log(err)
                 }
             })
@@ -260,19 +272,22 @@
         }
 //        app交互
         H5callApp("setTBSearchButton",{isShow: true});
-//        if (isIOS()) {
-//            connectWebViewJavascriptBridge(function (bridge) {
-//                bridge.registerHandler("requestSearch", function (data, responseCallback) {
-//                    responseCallback(requestSearch(data));
-//                });
-//
-//            });
-//        }
         IOSCallH5("requestSearch");
         window.requestSearch = function(data){
             alert(data)
             alert(JSON.stringify(data))
             params.name=data.name;
+            var resetHtml = '<div class="lists"></div>\
+                    <section id="dropdown" class="dropdown">\
+                    <ul class="list list1">\
+                    </ul>\
+                    <ul class="list list2">\
+                    </ul>\
+                    <ul class="list list3">\
+                    </ul>\
+                    </section>'
+            $("#content").html(resetHtml);
+            listEventRegist()
             dropload(reqUrl,"POST", params,true,callback);
         }
 

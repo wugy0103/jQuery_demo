@@ -79,6 +79,7 @@
     $(function(){
         // 点击延迟处理
         FastClick.attach(document.body);
+        var mallId = getQueryString("mallId")
         var params = {
             addtimeOrder:"desc"
         };
@@ -108,7 +109,7 @@
                 "picUrl":$(this).data("picurl"),
                 "title":$(this).data("title"),
                 "promotionPrice":$(this).data("promotionprice"),
-                "productUrl":$(this).data("producturl")
+                "productUrl":$(this).data("producturl")+"&mallId="+mallId
             }
             H5callApp("recommend",json,recommendCallback);
             function recommendCallback(){
