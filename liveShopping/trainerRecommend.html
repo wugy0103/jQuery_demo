@@ -28,7 +28,6 @@
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
     <title>私教推荐商品</title>
-    <link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productShow.css">
     <style>
@@ -40,9 +39,8 @@
 <body>
 <div class="layout">
     <!-- 内容 start -->
-    <main id="content" class="mui-content mui-scroll-wrapper">
-        <div class="mui-scroll" id="mui-scroll">
-        </div>
+    <main id="content">
+        <div class="lists"></div>
     </main>
     <!-- 内容 end -->
     <footer>
@@ -52,18 +50,18 @@
 <script id="product-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
-        <a href="{{prod.prodUrl}}" class="fl product-img">
+        <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fl product-img">
             <img src="{{prod.picUrl}}" alt="{{prod.title}}"/>
         </a>
         <div class="fr product-info">
-            <h3 class="product-title"><a href="{{prod.prodUrl}}">{{prod.title}}</a></h3>
+            <h3 class="product-title"><a href="{{prod.prodUrl}}?isLiveShopping=1">{{prod.title}}</a></h3>
 
             <div class="buyinfo clearfix">
                 <div class="fl">
                     <div class="price"><b>￥{{prod.promotionPrice}}</b><s>￥{{prod.price}}</s></div>
                     <div class="peopleNum">{{prod.buys}}人已购买</div>
                 </div>
-                <a href="{{prod.prodUrl}}" class="fr buyBtn main-color">去抢购</a>
+                <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fr button buyBtn main-color">去抢购</a>
             </div>
         </div>
     </div>
@@ -72,7 +70,7 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<script src="js/lib/mui.min.js"></script>
+<script src="js/lib/dropload.min.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function () {
@@ -81,7 +79,7 @@
         var params = {
             mallId: getQueryString("mallId")
         }
-        ajaxSuccess("/m_search/liveShoppingProdlist","GET",params);
+        dropload("/m_search/liveShoppingProdlist","GET",params,true);
     })
 </script>
 </body>

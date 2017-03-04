@@ -28,7 +28,6 @@
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
     <title>商品展示</title>
-    <!--<link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productShow.css">
 </head>
@@ -39,9 +38,8 @@
         <a href="/p/userOrder?isLiveShopping=1" class="fr">我的订单</a>
     </header>
     <!-- 内容 start -->
-    <main id="content" class="mui-content mui-scroll-wrapper">
-        <div class="mui-scroll" id="mui-scroll">
-        </div>
+    <main id="content">
+        <div class="lists"></div>
     </main>
     <!-- 内容 end -->
     <footer>
@@ -61,7 +59,7 @@
                     <div class="price"><b>￥{{prod.promotionPrice}}</b><s>￥{{prod.price}}</s></div>
                     <div class="peopleNum">{{prod.buys}}人已购买</div>
                 </div>
-                <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fr buyBtn main-color">去抢购</a>
+                <a href="{{prod.prodUrl}}?isLiveShopping=1" class="fr button buyBtn main-color">去抢购</a>
             </div>
         </div>
     </div>
@@ -70,24 +68,20 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<!--<script src="js/lib/mui.min.js"></script>-->
+<script src="js/lib/dropload.min.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
-        //设置cookie
-        var uid = getCookie("uid");
-        var device = getCookie("deviceType");
-        setCookie("uid",uid,"daxmall.com");
-        setCookie("deviceType",device,"daxmall.com");
+
         var params = {
             mallId: getQueryString("mallId")
         }
         function callback(data){
             $("header .fl").data("content",data.prodCount);//在css中，伪元素的content是能读取到data属性的。
         }
-        ajaxSuccess("/m_search/liveShoppingProdlist","GET",params,callback);
+        dropload("/m_search/liveShoppingProdlist","GET",params,true,callback);
     })
 </script>
 </body>

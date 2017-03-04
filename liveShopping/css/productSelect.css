@@ -1,20 +1,9 @@
-/*覆盖插件样式*/
-.mui-scroll-wrapper {
-    z-index: 1;
-}
-.mui-content {
-    background-color: #fff;
-}
-.mui-scroll {
-     position: static;
-}
 h1 {
     padding: 0;
     margin: 0;
     line-height: 4rem;
     font-weight: bold;
 }
-
 /*头部*/
 header,nav {
     height: 4rem;
@@ -31,8 +20,11 @@ header,nav {
 }
 nav {
     top: 0rem;
-    left: 0;
+    /*left: 0;*/
 
+}
+.shop-nav {
+    margin-right: -1px;
 }
 .shop-nav li {
     float: left;
@@ -65,21 +57,9 @@ main {
     margin-top: 4rem;
     margin-bottom: 4rem;
 }
-.noProduct {
-    width: 100%;
-    height: 100%;
-    background: url("../image/default_NoVideo@2x.png") no-repeat center;
-    -webkit-background-size: 60%;
-    background-size: 60%;
-}
+
 .noProduct::after {
     content: '暂无直播商品...';
-    position: absolute;
-    bottom: 5rem;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    font-size: 1.4rem;
 
 }
 /*单个商品*/

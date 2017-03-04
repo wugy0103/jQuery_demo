@@ -1,28 +1,12 @@
-/*覆盖插件样式*/
-.mui-scroll-wrapper {
-    z-index: 1;
-}
-.mui-content {
-    background-color: #fff;
-}
-.mui-scroll {
-     position: static;
-}
 h1 {
     padding: 0;
     margin: 0;
     line-height: 4rem;
 }
-.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
-    color: #33C774;
-}
-.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
-    font-size: 2rem   ;
-}
-.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {
-    position: absolute;
-    top: 0.8rem;
-    margin-left: -1rem;
+
+.noProduct::after {
+    content: '暂无可派优惠券...';
+
 
 }
 

@@ -28,7 +28,6 @@
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
     <title>可派发优惠券</title>
-    <!--<link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/coupon.css">
 </head>
@@ -39,9 +38,8 @@
         <h1>可派发优惠券</h1>
     </header>
     <!-- 内容 start -->
-    <main id="content" class="mui-content mui-scroll-wrapper">
-        <div class="mui-scroll" id="mui-scroll">
-        </div>
+    <main id="content">
+        <div class="lists"></div>
     </main>
     <!-- 内容 end -->
     <footer id="submit">确定</footer>
@@ -80,21 +78,34 @@
 <script src="js/lib/zepto.min.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<!--<script src="js/lib/mui.min.js"></script>-->
+<!--<script src="js/lib/dropload.min.js"></script>-->
 <script src="js/common.js"></script>
 <script>
     $(function () {
         // 点击延迟处理
         FastClick.attach(document.body);
-        //设置cookie
-        var uid = getCookie("uid");
-        var device = getCookie("deviceType");
-        setCookie("uid",uid,"daxmall.com");
-        setCookie("deviceType",device,"daxmall.com");
-        ajaxSuccess("/coupon/getDrawCouponList","GET",{},callback,callback,true);
-        function callback(){
-            console.log(1)
-        }
+//        dropload("/coupon/getDrawCouponList","GET",{},true);
+        $.ajax({
+            url:"/coupon/getDrawCouponList" ,
+            type: "GET",
+            dataType: "json",
+            async:false,
+            success: function (data) {
+                if(data.canDrawCouponList){
+                    var data = data;
+                    var html = template('product-box', data);
+                    $('.lists').append(html);
+                    // 如果没有数据
+                }else{
+                    $("#content").addClass("noProduct");
+                }
+
+            },
+            error: function (err) {
+                console.info(err)
+                alert('Ajax error!'+JSON.stringify(err));
+            }
+        });
         //        复选框
         $(".layout").on("click", "input[type='checkbox']", function () {
             if ($("input[type='checkbox']:checked").size() != 0) {
@@ -124,6 +135,7 @@
 //        })
 //        派卷
         $(".layout").on("click", ".enabled", function () {
+            H5callApp("setThePageLoading",{loading:true});
             var distConfig = []
             $("input[type='checkbox']:checked").each(function (i) {
                 distConfig[i]={}
@@ -141,9 +153,13 @@
                 success: function (data) {
                     console.info('success',data)
                     if(!!data.code){
-                        callApp("sendCoupon",{couponId: data.id});
-                        alert("派卷成功");
-                        window.location.reload()
+                        H5callApp("sendCoupon",{couponId: data.id},callback);
+                        function callback(){
+                            H5callApp("setThePageLoading",{loading:false});
+                            alert("派卷成功");
+                            window.location.reload()
+                        }
+
                     }else {
                         alert(data.msg)
                     }

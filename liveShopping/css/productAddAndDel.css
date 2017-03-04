@@ -1,13 +1,6 @@
-/*覆盖插件样式*/
-.mui-scroll-wrapper {
-    z-index: 1;
-}
-.mui-content {
-    background-color: #fff;
-}
-.mui-scroll {
-     position: static;
-}
+/*html,body,.layout{*/
+    /*height: 100%;*/
+/*}*/
 /*头部*/
 header,nav {
     height: 4rem;
@@ -66,21 +59,9 @@ main {
     margin-top: 4rem;
     margin-bottom: 4rem;
 }
-.noProduct {
-    width: 100%;
-    height: 100%;
-    background: url("../image/default_NoVideo@2x.png") no-repeat center;
-    -webkit-background-size: 60%;
-    background-size: 60%;
-}
+
 .noProduct::after {
     content: '商品陆续上架 敬请期待';
-    position: absolute;
-    bottom: 5rem;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    font-size: 1.4rem;
 
 }
 /*单个商品*/
@@ -90,18 +71,18 @@ main {
     position: relative;
 }
 .product-img {
-    width: 28%;
+    width: 25%;
     margin-top: 0.5rem;
 }
 .product-img img {
     width: 100%;
 }
 .product-info {
-    width: 57%;
+    width: 55%;
     margin-right: 3%;
 }
 .product-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     line-height: 2rem;
     padding-right:2rem;
 
@@ -169,15 +150,14 @@ footer .addProd.enabled {
     overflow: hidden;
     float: left;
     position: relative;
-    width: 10%;
+    width: 15%;
     height: 12rem;
 }
 .product-check input {
     position: absolute;
-    width: 2rem;
-    height: 2rem;
+    width: 100%;
+    height: 100%;
     opacity: 0;
-    z-index: 999;
     left: 0;
     top: 0;
     right: 0;
@@ -190,8 +170,8 @@ footer .addProd.enabled {
     border-radius: 50%;
     display: inline-block;
     position: absolute;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     left: 0;
     top: 0;
     right: 0;
@@ -199,10 +179,10 @@ footer .addProd.enabled {
     margin: auto;
 }
 .checkbox:checked + label {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     background: url(../image/selected@3x.png) no-repeat;
-    background-size: 2rem 2rem;
+    background-size: 2.5rem 2.5rem;
     color: #243441;
     border: none;
 }

@@ -1,13 +1,3 @@
-/*覆盖插件样式*/
-.mui-scroll-wrapper {
-    z-index: 1;
-}
-.mui-content {
-    background-color: #fff;
-}
-.mui-scroll {
-     position: static;
-}
 h1 {
     padding: 0;
     margin: 0;
@@ -48,8 +38,11 @@ header a.sync {
 
 nav {
     top: 4rem;
-    left: 0;
+    /*left: 0;*/
 
+}
+.shop-nav {
+    margin-right: -1px;
 }
 .shop-nav li {
     float: left;

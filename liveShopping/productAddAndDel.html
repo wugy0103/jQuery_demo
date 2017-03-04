@@ -28,7 +28,6 @@
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
     <title>直播商品</title>
-    <!--<link rel="stylesheet" type="text/css" href="css/lib/mui.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productAddAndDel.css">
 </head>
@@ -42,10 +41,8 @@
         </ul>
     </nav>
     <!-- 内容 start -->
-    <main id="content" class="mui-content mui-scroll-wrapper">
-        <div class="mui-scroll" id="mui-scroll">
-
-        </div>
+    <main id="content">
+        <div class="lists"></div>
         <section id="dropdown" class="dropdown">
             <ul class="list list1">
 
@@ -77,7 +74,7 @@
 
             <div class="buyinfo clearfix">
                 <div class="fl">
-                    <div class="price"><b>￥{{prod.promotionPrice}}</b><span>佣金比率：<i>{{prod.price}}</i></span></div>
+                    <div class="price"><b>￥{{prod.promotionPrice}}</b><span>佣金比率：<i>{{prod.distCommisRate}}</i></span></div>
                     <div class="peopleNum">销量: {{prod.buys}} 库存: {{prod.stocks}} 收藏: {{prod.favorite}}</div>
                 </div>
             </div>
@@ -89,7 +86,7 @@
 <script src="js/lib/fx.js"></script>
 <script src="js/lib/fastclick.min.js"></script>
 <script src="js/lib/template.js"></script>
-<!--<script src="js/lib/mui.min.js"></script>-->
+<script src="js/lib/dropload.min.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function () {
@@ -111,11 +108,11 @@
             params.addtimeOrder = "desc";
             $("title").html("删除直播商品");
         }
-
-        ajaxSuccess(reqUrl, "POST", params,callback);
+        dropload(reqUrl, "POST",params,true,callback);
         function callback(){
             if($(".product-box").size()==0){
-                $("#mui-scroll").addClass("noProduct");
+                $("#content").addClass("noProduct");
+                $(".dropload-noData").html("");
             }else {
                 $(".noProduct").removeClass("noProduct");
             }
@@ -143,6 +140,7 @@
                 async:false,
                 success: function (data) {
                     if (data.code == 1) {
+                        debugger
                         window.location.href = "/html/liveShopping/productSelect.html";
                     } else {
                         alert(data.msg);
@@ -186,55 +184,54 @@
                 allClassColse()
             }
         })
-        $(".list1").on("click","li", function (e) {
-            if(e.target && e.target.nodeName.toUpperCase() == "LI") {
-                var i =$(this).index();
-                var data=categoryListJson[i].child;
-                if(!!data[0]){
-                    $(".on").removeClass("on");
-                    $(this).addClass("on");
-                    list2Html="";
-                    list3Html="";
-                    $('.list2').html("");
-                    $('.list3').html("");
-                    $('.list2').data("index",i);
-                    $.each(data, function (i) {
-                        list2Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
-                    })
-//                    $('.list2').html(list2Html).css({
-//                        marginTop:i*41+"px"
-//                    }).slideDown(1000);
-                }else {
+        function listEventRegist(){
+            $(".list1").on("click","li", function (e) {
+                if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                    var i =$(this).index();
+                    var data=categoryListJson[i].child;
+                    if(!!data[0]){
+                        $(".on").removeClass("on");
+                        $(this).addClass("on");
+                        list2Html="";
+                        list3Html="";
+                        $('.list2').html("");
+                        $('.list3').html("");
+                        $('.list2').data("index",i);
+                        $.each(data, function (i) {
+                            list2Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
+                        })
+                        $('.list2').html(list2Html).slideDown(1000);
+                    }else {
+                        allClassAjax($(this))
+                    }
+                }
+            })
+            $(".list2").on("click","li", function (e) {
+                if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                    var index = $(".list2").data("index")
+                    var i =$(this).index();
+                    var data=categoryListJson[index].child[i].child;
+                    if(!!data[0]){
+                        $(".on").removeClass("on");
+                        $(this).addClass("on");
+                        list3Html="";
+                        $('.list3').html("");
+                        $.each(data, function (i) {
+                            list3Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
+                        })
+                        $('.list3').html(list3Html).slideDown(200);
+                    }else {
+                        allClassAjax($(this))
+                    }
+                }
+            })
+            $(".list3").on("click","li", function (e) {
+                if(e.target && e.target.nodeName.toUpperCase() == "LI") {
                     allClassAjax($(this))
                 }
-            }
-        })
-        $(".list2").on("click","li", function (e) {
-            if(e.target && e.target.nodeName.toUpperCase() == "LI") {
-                var index = $(".list2").data("index")
-                var i =$(this).index();
-                var data=categoryListJson[index].child[i].child;
-                if(!!data[0]){
-                    $(".on").removeClass("on");
-                    $(this).addClass("on");
-                    list3Html="";
-                    $('.list3').html("");
-                    $.each(data, function (i) {
-                        list3Html += "<li data-id='"+data[i].id+"'>"+data[i].name+"</li>";
-                    })
-                    $('.list3').html(list3Html).css({
-                        marginTop:index*41+i*41+"px"
-                    }).slideDown(200);
-                }else {
-                    allClassAjax($(this))
-                }
-            }
-        })
-        $(".list3").on("click","li", function (e) {
-            if(e.target && e.target.nodeName.toUpperCase() == "LI") {
-                    allClassAjax($(this))
-            }
-        })
+            })
+        }
+        listEventRegist()
         function allClassColse(){
             $("#dropdown").hide();
             allClassFlag = false;
@@ -248,23 +245,35 @@
         function allClassAjax(li){
             params.categoryId=li.data("id");
             allClassColse();
-            ajaxSuccess(reqUrl, "POST", params,callback);
+            var resetHtml = '<div class="lists"></div>\
+                    <section id="dropdown" class="dropdown">\
+                    <ul class="list list1">\
+                    </ul>\
+                    <ul class="list list2">\
+                    </ul>\
+                    <ul class="list list3">\
+                    </ul>\
+                    </section>'
+            $("#content").html(resetHtml);
+            listEventRegist()
+            dropload(reqUrl, "POST", params,true,callback);
         }
 //        app交互
-        callApp("setTBSearchButton",{isShow: true});
-        if (isIOS()) {
-            connectWebViewJavascriptBridge(function (bridge) {
-                bridge.registerHandler("requestSearch", function (data, responseCallback) {
-                    responseCallback(requestSearch(data));
-                });
-
-            });
-        }
+        H5callApp("setTBSearchButton",{isShow: true});
+//        if (isIOS()) {
+//            connectWebViewJavascriptBridge(function (bridge) {
+//                bridge.registerHandler("requestSearch", function (data, responseCallback) {
+//                    responseCallback(requestSearch(data));
+//                });
+//
+//            });
+//        }
+        IOSCallH5("requestSearch");
         window.requestSearch = function(data){
             alert(data)
             alert(JSON.stringify(data))
             params.name=data.name;
-            ajaxSuccess(reqUrl,"POST", params,callback);
+            dropload(reqUrl,"POST", params,true,callback);
         }
 
     })
