@@ -114,7 +114,6 @@
             H5callApp("recommend",json,recommendCallback);
             function recommendCallback(){
                 H5callApp("setThePageLoading",{loading:false});
-                alert("推荐成功");
             }
         })
         dropload("/liveshoppingManage/getInLiveshoppingProdList","POST",params,true);

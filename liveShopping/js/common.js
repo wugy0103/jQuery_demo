@@ -13,7 +13,10 @@ function isIOS() {
         navigator.platform === 'iPod touch' ||
         navigator.platform === 'iPod Touch';
 }
+var baseUrl = "http://wgy.healthmall.cn:8080/authRemote/whereIsURL?url=http://wgy.healthmall.cn:8080/";
+var async = true;
 if(isIOS()){
+    async = false;
     function connectWebViewJavascriptBridge(callback) {
         if (window.WebViewJavascriptBridge) {
             callback(WebViewJavascriptBridge);
@@ -62,7 +65,6 @@ function IOSCallH5(func){
         });
     }
 }
-
 // 获取url参数值
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -109,7 +111,7 @@ function dropload(url,type,params,isPaging,callback,mallId){
                 type: type,
                 data: params,
                 dataType: "json",
-                async:false,
+                async:async,
                 success: function (data) {
                     if(data.prodList){
                         var data = data;
@@ -136,9 +138,9 @@ function dropload(url,type,params,isPaging,callback,mallId){
                 error: function (err) {
                     H5callApp("setThePageLoading",{loading:false});
                     console.info(err)
-                    alert('Ajax error!'+JSON.stringify(err));
                     // 即使加载出错，也得重置
                     me.resetload();
+                    alert('Server error!'+JSON.stringify(err));
                 }
             })
 
@@ -146,7 +148,7 @@ function dropload(url,type,params,isPaging,callback,mallId){
         }
     });
 }
-var baseUrl = "http://wgy.daxmall.com:8080/p/account/whereIsURL?url=http://wgy.daxmall.com:8080/";
+
 //mui分页加载
 //function ajaxSuccess (url,type,params,callback,muiCallback,needPage) {
 //    $.ajax({

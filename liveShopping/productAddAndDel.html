@@ -143,12 +143,12 @@
                 type: "POST",
                 data: params,
                 dataType: "json",
-                async:false,
+                async:async,
                 success: function (data) {
                     H5callApp("setThePageLoading",{loading:false});
-                    debugger
                     if (data.code == 1) {
-                        window.location.href = "/html/liveShopping/productSelect.html";
+//                        window.location.href = "/html/liveShopping/productSelect.html";
+                        H5callApp("requestCloseWeb",{});
 //                        H5callApp("startViewToShow",{
 //                            url:baseUrl+"html/liveShopping/productSelect.html",
 //                            isLoadding:true
@@ -160,6 +160,7 @@
                 error: function (err) {
                     H5callApp("setThePageLoading",{loading:false});
                     console.log(err)
+                    alert('Server error!'+JSON.stringify(err));
                 }
             })
         })
@@ -176,7 +177,7 @@
                     url: "/categoryListJson",
                     type: "GET",
                     dataType: "json",
-                    async:false,
+                    async:async,
                     success: function (data) {
                         console.log(data);
                         categoryListJson = data
@@ -189,7 +190,7 @@
                     },
                     error: function (err) {
                         console.log(err)
-                        alert("请求错误"+err)
+                        alert('Server error!'+JSON.stringify(err));
                     }
                 })
             }else {
@@ -274,8 +275,8 @@
         H5callApp("setTBSearchButton",{isShow: true});
         IOSCallH5("requestSearch");
         window.requestSearch = function(data){
-            alert(data)
-            alert(JSON.stringify(data))
+//            alert(data)
+//            alert(JSON.stringify(data))
             params.name=data.name;
             var resetHtml = '<div class="lists"></div>\
                     <section id="dropdown" class="dropdown">\

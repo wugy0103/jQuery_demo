@@ -89,7 +89,7 @@
             url:"/coupon/getDrawCouponList" ,
             type: "GET",
             dataType: "json",
-            async:false,
+            async:async,
             success: function (data) {
                 if(data.canDrawCouponList){
                     var data = data;
@@ -104,7 +104,7 @@
             error: function (err) {
                 H5callApp("setThePageLoading",{loading:false});
                 console.info(err)
-                alert('Ajax error!'+JSON.stringify(err));
+                alert('Server error!'+JSON.stringify(err));
             }
         });
         //        复选框
@@ -151,6 +151,7 @@
                 type: "POST",
                 data: params,
                 dataType: "json",
+                async:async,
                 success: function (data) {
                     console.info('success',data)
                     if(!!data.code){
@@ -169,7 +170,7 @@
                 error: function (err) {
                     H5callApp("setThePageLoading",{loading:false});
                     console.info(err)
-                    alert(err.status+" "+err.statusText+" "+err.readyState+" "+err.responseText)
+                    alert('Server error!'+JSON.stringify(err));
                 }
             })
         })
