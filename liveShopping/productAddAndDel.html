@@ -27,11 +27,6 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name='apple-itunes-app' content='app-id=966436668'>
     <!-- 适应移动端end -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-
-    <meta http-equiv="Pragma" content="no-cache">
-
-    <meta http-equiv="Expires" content="-1">
     <title>直播商品</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/productAddAndDel.css">
@@ -62,10 +57,10 @@
     </main>
     <!-- 内容 end -->
     <footer>
-        <a href="#" class="addProd">添加已选商品</a>
+        <a href="javascript:;" class="addProd">添加已选商品</a>
     </footer>
 </div>
-<script id="product-box" type="text/html">
+<script id="data-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix">
         <div class="product-check"><input type="checkbox" class="checkbox" name="checkbox"
@@ -87,11 +82,11 @@
     </div>
     {{/each}}
 </script>
-<script src="js/lib/zepto.min.js"></script>
-<script src="js/lib/fx.js"></script>
-<script src="js/lib/fastclick.min.js"></script>
-<script src="js/lib/template.js"></script>
-<script src="js/lib/dropload.min.js"></script>
+<script src="/html/common/js/lib/zepto.min.js"></script>
+<script src="/html/common/js/lib/zepto.fx.js"></script>
+<script src="/html/common/js/lib/fastclick.min.js"></script>
+<script src="/html/common/js/lib/template.js"></script>
+<script src="/html/common/js/lib/dropload.min.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function () {
@@ -147,12 +142,12 @@
                 success: function (data) {
                     H5callApp("setThePageLoading",{loading:false});
                     if (data.code == 1) {
-//                        window.location.href = "/html/liveShopping/productSelect.html";
-                        H5callApp("requestCloseWeb",{});
-//                        H5callApp("startViewToShow",{
-//                            url:baseUrl+"html/liveShopping/productSelect.html",
-//                            isLoadding:true
-//                        });
+                        if(isIOS()){
+                            H5callApp("requestBack",{});
+                        }else {
+                            H5callApp("requestCloseWeb",{});
+                        }
+
                     } else {
                         alert(data.msg);
                     }
@@ -171,6 +166,7 @@
         var list2Html="";
         var list3Html="";
         $(".allClass").on("click", function () {
+            $(this).html("全部类目");
             if(allClassFlag == false){
                 allClassFlag = true;
                 $.ajax({
@@ -200,6 +196,7 @@
         function listEventRegist(){
             $(".list1").on("click","li", function (e) {
                 if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                    $(".allClass").html($(this).html());
                     var i =$(this).index();
                     var data=categoryListJson[i].child;
                     if(!!data[0]){
@@ -217,10 +214,12 @@
                     }else {
                         allClassAjax($(this))
                     }
+
                 }
             })
             $(".list2").on("click","li", function (e) {
                 if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                    $(".allClass").html($(this).html());
                     var index = $(".list2").data("index")
                     var i =$(this).index();
                     var data=categoryListJson[index].child[i].child;
@@ -236,12 +235,15 @@
                     }else {
                         allClassAjax($(this))
                     }
+
                 }
             })
             $(".list3").on("click","li", function (e) {
                 if(e.target && e.target.nodeName.toUpperCase() == "LI") {
+                    $(".allClass").html($(this).html());
                     allClassAjax($(this))
                 }
+
             })
         }
         listEventRegist()
@@ -273,11 +275,12 @@
         }
 //        app交互
         H5callApp("setTBSearchButton",{isShow: true});
+        window.onunload = function () {
+            H5callApp("setTBSearchButton",{isShow: false});
+        }
         IOSCallH5("requestSearch");
         window.requestSearch = function(data){
-//            alert(data)
-//            alert(JSON.stringify(data))
-            params.name=data.name;
+            params.name=data.content;
             var resetHtml = '<div class="lists"></div>\
                     <section id="dropdown" class="dropdown">\
                     <ul class="list list1">\

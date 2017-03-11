@@ -50,7 +50,7 @@
     </main>
     <!-- 内容 end -->
 </div>
-<script id="product-box" type="text/html">
+<script id="data-box" type="text/html">
     {{each prodList as prod i}}
     <div class="product-box clearfix opacity" >
         <a href="javascript:;" class="fl product-img">
@@ -64,16 +64,16 @@
                     <div class="price"><b>￥{{prod.promotionPrice}}</b></div>
                     <div class="peopleNum">销量: {{prod.buys}}  库存: {{prod.stocks}}  收藏: {{prod.favorite}} </div>
                 </div>
-                <a href="javascript:;" data-picUrl="{{prod.picUrl}}" data-title="{{prod.title}}" data-promotionPrice="{{prod.promotionPrice}}" data-productId="{{prod.productId}}" data-productUrl="{{prod.prodUrl}}?isLiveShopping=1" class="fr button recommendBtn main-color">推荐</a>
+                <a href="javascript:;" data-picUrl="{{prod.picUrl}}" data-title="{{prod.title}}" data-promotionPrice="{{prod.promotionPrice}}" data-productId="{{prod.productId}}" data-productUrl="{{prod.prodUrl}}" class="fr button recommendBtn main-color">推荐</a>
             </div>
         </div>
     </div>
     {{/each}}
 </script>
-<script src="js/lib/zepto.min.js"></script>
-<script src="js/lib/fastclick.min.js"></script>
-<script src="js/lib/template.js"></script>
-<script src="js/lib/dropload.min.js"></script>
+<script src="/html/common/js/lib/zepto.min.js"></script>
+<script src="/html/common/js/lib/fastclick.min.js"></script>
+<script src="/html/common/js/lib/template.js"></script>
+<script src="/html/common/js/lib/dropload.min.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function(){
@@ -109,7 +109,7 @@
                 "picUrl":$(this).data("picurl"),
                 "title":$(this).data("title"),
                 "promotionPrice":$(this).data("promotionprice"),
-                "productUrl":$(this).data("producturl")+"&mallId="+mallId
+                "productUrl":encodeURIComponent($(this).data("producturl")+"?mallId="+mallId+"&isLiveShopping=1")
             }
             H5callApp("recommend",json,recommendCallback);
             function recommendCallback(){

@@ -13,7 +13,7 @@ function isIOS() {
         navigator.platform === 'iPod touch' ||
         navigator.platform === 'iPod Touch';
 }
-var baseUrl = "http://wgy.healthmall.cn:8080/authRemote/whereIsURL?url=http://wgy.healthmall.cn:8080/";
+var baseUrl = "http://"+window.location.host+"/authRemote/whereIsURL?url=http://"+window.location.host+"/";
 var async = true;
 if(isIOS()){
     async = false;
@@ -51,7 +51,7 @@ function H5callApp(func,json,callback){
             callback();
         }
     }else{
-        //alert("请在健康猫APP打开！");
+        console.info("请在健康猫APP打开！");
     }
 }
 //app调用h5
@@ -87,7 +87,37 @@ function setCookie(c_name, value,domain, expiredays) {
     document.cookie = c_name + "=" + escape(value) + ";domain="+domain+";path=/" +
         ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
 }
-//分页加载
+//数据列表加载
+function dataListLoad(url,type,params,isData,callback){
+    H5callApp("setThePageLoading",{loading:true});
+    $.ajax({
+        url:url ,
+        type: type,
+        data: params,
+        dataType: "json",
+        async:async,
+        success: function (data) {
+            if(isData){
+                if(JSON.stringify(data)!="{}"){
+                    var listsHtml = template('data-box', data);
+                    $('.lists').append(listsHtml);
+                }else{
+                    //$("#content").addClass("noProduct");
+                }
+            }
+            if(!!callback){
+                callback(data);
+            }
+            H5callApp("setThePageLoading",{loading:false});
+        },
+        error: function (err) {
+            H5callApp("setThePageLoading",{loading:false});
+            console.info(err)
+            alert('请求失败!'+JSON.stringify(err));
+        }
+    })
+}
+//dropload分页加载
 function dropload(url,type,params,isPaging,callback,mallId){
     H5callApp("setThePageLoading",{loading:true});
     if(isPaging){
@@ -99,7 +129,7 @@ function dropload(url,type,params,isPaging,callback,mallId){
         domDown : {
             domClass   : 'dropload-down',
             domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
-            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+            domLoad    : '<div class="dropload-load"></div>',
             domNoData  : '<div class="dropload-noData">暂无更多商品</div>'
         },
         loadDownFn : function(me){
@@ -113,12 +143,11 @@ function dropload(url,type,params,isPaging,callback,mallId){
                 dataType: "json",
                 async:async,
                 success: function (data) {
-                    if(data.prodList){
-                        var data = data;
+                    if(JSON.stringify(data)!="{}"){
                         if(mallId){
                             data.mallId =mallId;
                         }
-                        var html = template('product-box', data);
+                        var html = template('data-box', data);
                         $('.lists').append(html);
                         // 如果没有数据
                     }else{
@@ -136,11 +165,11 @@ function dropload(url,type,params,isPaging,callback,mallId){
                     H5callApp("setThePageLoading",{loading:false});
                 },
                 error: function (err) {
-                    H5callApp("setThePageLoading",{loading:false});
-                    console.info(err)
                     // 即使加载出错，也得重置
                     me.resetload();
-                    alert('Server error!'+JSON.stringify(err));
+                    H5callApp("setThePageLoading",{loading:false});
+                    console.info(err)
+                    alert('请求失败!'+JSON.stringify(err));
                 }
             })
 
@@ -148,74 +177,3 @@ function dropload(url,type,params,isPaging,callback,mallId){
         }
     });
 }
-
-//mui分页加载
-//function ajaxSuccess (url,type,params,callback,muiCallback,needPage) {
-//    $.ajax({
-//        url: url,
-//        type: type,
-//        data: params,
-//        dataType: "json",
-//        async:false,
-//        success: function (data) {
-//            console.log("第一次加载",data);
-//            var data = data;
-//            var html = template('product-box', data);
-//            $('#mui-scroll').html(html);
-//            if(!!callback){
-//                callback(data);
-//            }
-//          下拉更多
-//            if(!needPage){
-//                mui.init({
-//                    pullRefresh: {
-//                        container: "#content",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-//                        up: {
-//                            height: 0,//可选.默认50.触发上拉加载拖动距离
-//                            auto: false,//可选,默认false.自动上拉加载一次
-//                            contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-//                            contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-//                            callback: function () {
-//                                //业务逻辑代码，比如通过ajax从服务器获取新数据；
-//                                params.curPageNO=data.curPageNO+1;
-//                                $.ajax({
-//                                    url: url,
-//                                    type: type,
-//                                    data: params,
-//                                    dataType: "json",
-//                                    async:false,
-//                                    success: function (pageData) {
-//                                        console.log("分页加载",pageData);
-//                                        data.curPageNO=pageData.curPageNO;
-//                                        mui('#content').pullRefresh().endPullupToRefresh(!pageData.prodList);
-//                                        var pageData = pageData;
-//                                        var pataHtml = template('product-box', pageData);
-//                                        $('.mui-pull-bottom-pocket').before(pataHtml);
-//                                        if(!!muiCallback){
-//                                            muiCallback();
-//                                        }
-//                                    },
-//                                    error: function (err) {
-//                                        console.info(err)
-//                                        alert(err.status+" "+err.statusText+" "+err.readyState+" "+err.responseText)
-//                                        alert(JSON.stringify(err))
-//                                    }
-//                                })
-//                                //注意：
-//                                //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
-//                                //2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
-//
-//                            }//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-//                        }
-//                    }
-//                });
-//            }
-//        },
-//        error: function (err) {
-//            console.info(err)
-//            alert(err.status+" "+err.statusText+" "+err.readyState+" "+err.responseText)
-//            alert(JSON.stringify(err))
-//        }
-//    })
-//
-//}

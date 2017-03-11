@@ -245,7 +245,7 @@ header,nav,.layout {
     background-size: 60%;
 }
 .noProduct::after {
-    content: '暂无直播商品...';
+    content: '暂无数据...';
     position: absolute;
     bottom: -1.4rem;
     left: 50%;
