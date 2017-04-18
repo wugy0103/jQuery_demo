@@ -33,25 +33,38 @@
 //    setCookie("deviceType","2");
     console.log(document.cookie);
     $("#btn").on("click", function () {
-        window.location.href="http://wgy.healthmall.cn:8080/authRemote/whereIsURL?url=http://wgy.healthmall.cn:8080/html/liveShopping/coupon.html       "
+        window.location.href="http://localhost:3001/mall/20170315"
     });
 
-                    callApp("paySuccessCallback",{
-                        username:"用户名",
-                        prodLists:[
-                            {
-                            "productId":"商品id",
-                            "picUrl":"商品的图片url地址",
-                            "title":"商品名",
-                            "promotionPrice":"商品价格"
-                            },
-                            {
-                                "productId":"商品id",
-                                "picUrl":"商品的图片url地址",
-                                "title":"商品名",
-                                "promotionPrice":"商品价格"
-                            }]
-                    })
+                    // callApp("paySuccessCallback",{
+                    //     username:"用户名",
+                    //     prodLists:[
+                    //         {
+                    //         "productId":"商品id",
+                    //         "picUrl":"商品的图片url地址",
+                    //         "title":"商品名",
+                    //         "promotionPrice":"商品价格"
+                    //         },
+                    //         {
+                    //             "productId":"商品id",
+                    //             "picUrl":"商品的图片url地址",
+                    //             "title":"商品名",
+                    //             "promotionPrice":"商品价格"
+                    //         }]
+                    // })
+
+function compile(code)
+{
+var c=String.fromCharCode(code.charCodeAt(0)+code.length);
+for(var i=1;i<code.length;i++)
+alert(escape(c));
+}
+compile('alert("《Sweet》");')
+
+
+
+// 运行得到加密结果为：
+// o%CD%D1%D7%E6%9CJ%u9EF3%uFA73%uF1D4%u14F1%u7EE1Kd
 </script>
 </body>
 </html>

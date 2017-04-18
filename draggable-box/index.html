@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <title></title>
+    <style>
+        *,
+        ::before,
+        ::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            /* 取消链接高亮  */
+            -webkit-tap-highlight-color: transparent;
+            tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 10px;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        @media only screen and (min-width: 410px) {
+            html {
+                font-size: 12px !important;
+            }
+        }
+
+        @media only screen and (min-width: 560px) {
+            html {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 640px) {
+            html {
+                font-size: 16px !important;
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            html {
+                font-size: 18px !important;
+            }
+        }
+
+        body {
+            font-size: 1.2rem;
+            font-family: "PingFangSC-Regular", "STHeitiSC-Light", "Microsoft Yahei", Arial, Helvetica, sans-serif;
+            color: #323232;;
+            background-color: #ffffff;
+        }
+
+        html, body {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        a,
+        a:hover {
+            color: #333;
+            text-decoration: none;
+            -webkit-touch-callout: none;
+        }
+        .button:active {
+            background-color: #33C774 !important;
+            color:#ffffff !important;
+        }
+
+        li,
+        ol,
+        ul {
+            list-style: none
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 100%;
+        }
+
+        img {
+            display: block;
+            border: none;
+            vertical-align: top; /*  去掉图片低测默认的3像素空白缝隙*/
+            -webkit-touch-callout: none;
+        }
+
+        fieldset, input, button {
+            /*fieldset组合表单中的相关元素*/
+            border: none;
+            outline-style: none;
+        }
+
+        select, input {
+            vertical-align: middle;
+        }
+
+        textarea {
+            resize: none; /*防止多行文本框拖动*/
+        }
+
+        table {
+            border-collapse: collapse; /*合并外边线*/
+        }
+
+        i,
+        s,
+        b {
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        input, textarea {
+            border: none;
+            outline: none;
+            resize: none;
+            /*在移动设备当中 有一些浏览器是会有自己的默认样式*/
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .block,
+        nav,
+        main,
+        header,
+        footer,
+        section {
+            display: block
+        }
+
+        .clearfix::before,
+        .clearfix::after {
+            content: '';
+            height: 0;
+            line-height: 0;
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
+        }
+
+
+        .draggable-box {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 999;
+        }
+        .draggable-box::before {
+            content: '';
+            position: absolute;
+            width: 25%;
+            height: 100%;
+            z-index: 998;
+            transform: translate(-100%,0);
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .draggable-scoll {
+            overflow: scroll;
+            height: 100%;
+            padding-bottom: 4rem;
+        }
+        .draggable-item {
+            margin: 1.5rem;
+        }
+        .draggable-title {
+            font-size: 1.4rem;
+            color: #333333;
+            line-height: 1.6rem;
+            width: 100%;
+        }
+        .draggable-title span {
+            font-size: 1.2rem;
+            line-height: 1.6rem;
+            color: #666666;
+        }
+        .draggable-content {
+            margin: 1rem 0;
+        }
+
+        .draggable-content input {
+            width: 40%;
+            background: #F5F5F5;
+            border-radius: 4px;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            text-align: center;
+        }
+        .draggable-content span {
+            width: 20%;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            text-align: center;
+        }
+        .draggable-content li {
+            float: left;
+            width: 30%;
+            background: #F5F5F5;
+            border-radius: 4px;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            margin: 0.5rem 1.666666%;
+            text-align: center;
+        }
+        .draggable-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4rem;
+            border-top: 1px solid #ddd;
+        }
+        .draggable-footer a {
+            text-align: center;
+            height: 4rem;
+            line-height: 4rem;
+            font-size: 1.4rem;
+            width: 50%;
+            float: left;
+            background: #fff;
+        }
+        .submit {
+            background: #F1392F !important;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <section class="draggable-box">
+        <div class="draggable-scoll">
+            <div class="draggable-item">
+                <h2 class="draggable-title">价格区间</h2>
+                <div class="draggable-content clearfix">
+                    <input class="fl" type="text" placeholder="最低价"/>
+                    <span class="fl">—</span>
+                    <input class="fr" type="text" placeholder="最高价"/>
+                </div>
+            </div>
+            <div class="draggable-item">
+                <h2 class="draggable-title">品牌 <span class="fr">全部品牌 ></span></h2>
+                <ul class="draggable-content clearfix"  id="brand-data-box">
+
+                </ul>
+            </div>
+            <div class="draggable-item">
+                <h2 class="draggable-title">类目 <span class="fr">全部类目 ></span></h2>
+                <ul class="draggable-content clearfix"  id="category-data-box">
+
+                </ul>
+            </div>
+            <div class="draggable-item ">
+                <h2 class="draggable-title">使用性别</h2>
+                <ul class="draggable-content clearfix">
+                    <li>男</li>
+                    <li>女</li>
+                    <li>通用</li>
+                </ul>
+            </div>
+        </div>
+        <div class="draggable-footer">
+            <a href="javascript:;">重置</a>
+            <a href="javascript:;" class="submit">确定</a>
+        </div>
+    </section>
+    <script id="brand-data" type="text/html">
+        {{each branIdList as brand i}}
+            <li data-brandId="{{brand.brandId}}">{{brand.brandName}}</li>
+        {{/each}}
+    </script>
+    <script id="category-data" type="text/html">
+        {{each categoryList as category i}}
+            <li data-categoryId="{{category.id}}">{{category.name}}</li>
+        {{/each}}
+    </script>
+    <script src="jquery.min.js"></script>
+    <script src="template.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url:"./data.json",
+                type:"get",
+                success:function(data){
+                    console.log(data);
+                    if(data.resultCode == 1){
+//                        品牌
+                        var brandData = {};
+                        brandData.branIdList = data.branIdList.slice(0,6);
+                        var brandHtml = template('brand-data', brandData);
+                        $('#brand-data-box').append(brandHtml);
+//                        类目
+                        var categoryData = {categoryList:[]};
+                        for(var i=0 ;i<6;i++){
+                            categoryData.categoryList.push(data.categoryList.slice(0,6)[i].childrenList[0]);
+                        }
+                        var categoryHtml = template('category-data', categoryData);
+                        $('#category-data-box').append(categoryHtml);
+                    }else {
+                        alert(data.message);
+                    }
+
+                },
+                error:function(err){
+                    console.log(err);
+                    alert("网络繁忙！");
+                }
+            })
+        })
+    </script>
+</body>
+</html>
