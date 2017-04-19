@@ -292,7 +292,7 @@
             transition: all 0.4s;
         }
         .category-content {
-            display: none;
+            /*display: none;*/
             transition: all 0.4s;
         }
         .category-content li {
@@ -364,6 +364,9 @@
 </section>
 <section class="draggable-box" id="allCategory-data-box">
 </section>
+<section class="draggable-box" id="allBrand-data-box">
+</section>
+
 <script id="brand-data" type="text/html">
     {{each branIdList as brand i}}
     <li data-brandid="{{brand.brandId}}">{{brand.brandName}}</li>
@@ -388,7 +391,20 @@
     {{/each}}
         </div>
 </script>
-
+<script id="allBrand-data" type="text/html">
+    <div class="draggable-scoll">
+        {{each brandNameandIdArray}}
+        <div class="category-item">
+            <h2 class="category-title" data-categoryid="{{$value.id}}">{{$value.letter}}</h2>
+            <ul class="category-content clearfix">
+                {{each $value.data as childrenBrand j}}
+                <li data-brandid="{{childrenBrand.brandId}}">{{childrenBrand.brandName}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        {{/each}}
+    </div>
+</script>
 <script src="jquery.min.js"></script>
 <script src="artTemplate.js"></script>
 <script>
@@ -453,10 +469,43 @@
                                         }
                                     })
                                     var $span = $(this).find("span");
+                                    var $this = $(this);
                                     $(".category-content li").on("click", function () {
                                         $span.attr("data-categoryid",$(this).data("categoryid"));
                                         $span.html($(this).html());
+                                        $this.find(".checked").removeClass("checked")
                                         $(".draggable-box").eq(1).removeClass("active");
+                                    })
+                                }
+//                                全部品牌
+                                if(e.target && $(e.target).hasClass("allBrand")) {
+                                    $(".draggable-box").eq(2).addClass("active");
+//                                    数据拼接成所需格式
+                                    var brandNameArray = [];
+                                    for(var i=0;i<data.branIdList.length;i++){
+                                        brandNameArray.push(data.branIdList[i].brandName+","+data.branIdList[i].brandId);
+                                    }
+                                    brandNameArray = JSON.parse(JSON.stringify(pySegSort(brandNameArray)));
+                                    var brandNameandIdArray = brandNameArray;
+                                    for(var j=0;j<brandNameArray.length;j++){
+                                        for(var z=0; z<brandNameArray[j].data.length;z++){
+                                            var newArray = brandNameArray[j].data[z].split(",");
+                                            brandNameandIdArray[j].data[z] ={};
+                                            brandNameandIdArray[j].data[z].brandName=newArray[0];
+                                            brandNameandIdArray[j].data[z].brandId=newArray[1];
+                                        }
+                                    }
+                                    data.brandNameandIdArray = brandNameandIdArray;
+                                    var allBrandHtml = template('allBrand-data', data);
+                                    $('#allBrand-data-box').prepend(allBrandHtml);
+
+                                    var $span = $(this).find("span");
+                                    var $this = $(this);
+                                    $(".category-content li").on("click", function () {
+                                        $span.attr("data-brandid",$(this).data("brandid"));
+                                        $span.html($(this).html());
+                                        $this.find(".checked").removeClass("checked");
+                                        $(".draggable-box").eq(2).removeClass("active");
                                     })
                                 }
                             });
@@ -486,6 +535,32 @@
             }
 
         })
+//        数组按字母排序
+        function pySegSort(arr,empty) {
+            if(!String.prototype.localeCompare)
+                return null;
+
+            var letters = "*abcdefghjklmnopqrstwxyz".split('');
+            var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
+
+            var segs = [];
+            var curr;
+            $.each(letters, function(i){
+                curr = {letter: this, data:[]};
+                $.each(arr, function() {
+                    if((!zh[i-1] || zh[i-1].localeCompare(this) <= 0) && this.localeCompare(zh[i]) == -1) {
+                        curr.data.push(this);
+                    }
+                });
+                if(empty || curr.data.length) {
+                    segs.push(curr);
+                    curr.data.sort(function(a,b){
+                        return a.localeCompare(b);
+                    });
+                }
+            });
+            return segs;
+        }
 
     })
 </script>
