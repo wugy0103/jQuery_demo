@@ -358,7 +358,7 @@
         </div>
     </div>
     <div class="draggable-footer">
-        <a href="javascript:;">重置</a>
+        <a href="javascript:;" class="reset">重置</a>
         <a href="javascript:;" class="submit">确定</a>
     </div>
 </section>
@@ -509,7 +509,18 @@
                                     })
                                 }
                             });
+//                            重置
+                            $(".reset").on("click", function () {
+                                $(".checked").removeClass("checked");
+                                $("#startPrice").val("")
+                                $("#endPrice").val("")
+                                $("#categoryId").attr("data-categoryid","")
+                                $("#prop").attr("data-brandid","")
+                                $("#categoryId").html("")
+                                $("#prop").html("")
+                                $("#keyword").html("")
 
+                            })
 //                            提交
                             $(".submit").on("click", function () {
                                 var params = {
