@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -159,9 +160,15 @@
             height: 100%;
             background-color: #fff;
             z-index: 999;
+            -webkit-transform:translate(130%,0) ;
+            transform:translate(130%,0)  ;
+            transition:all 0.4s ;
         }
-        .draggable-box::before {
-            content: '';
+        .draggable-box.active {
+            -webkit-transform:translate(0,0) ;
+            transform:translate(0,0)  ;
+        }
+        .cover {
             position: absolute;
             width: 25%;
             height: 100%;
@@ -188,7 +195,7 @@
         .draggable-title span {
             font-size: 1.2rem;
             line-height: 1.6rem;
-            color: #666666;
+            color: #F1392F;
         }
         .draggable-content {
             margin: 1rem 0;
@@ -218,6 +225,12 @@
             margin: 0.5rem 1.666666%;
             text-align: center;
         }
+        .allClass {
+            font-size: 1.2rem;
+            line-height: 1.6rem;
+            color: #666666;
+            background-color: #fff !important;
+        }
         .draggable-footer {
             position: absolute;
             bottom: 0;
@@ -239,88 +252,242 @@
             background: #F1392F !important;
             color: #fff;
         }
+        .draggable-content li.checked {
+            background: #FFFFFF;
+            border: 1px solid #F1392F;
+            color: #F1392F;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .draggable-content li.checked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1rem;
+            height: 1.23rem;
+            background: url("icon_select@2x.png") no-repeat;
+            -webkit-background-size: 1rem 1.23rem;
+            background-size: 1rem 1.23rem;
+        }
+        /*分类*/
+        .category-title {
+            width: 100%;
+            height: 3.5rem;
+            font-size: 1.4rem;
+            line-height: 3.5rem;
+            padding-left: 1rem;
+            border-bottom: 1px solid #DDDDDD;
+        }
+        .category-title i {
+            background: url("general_icon_forward@2x.png") center no-repeat;
+            float: right;
+            width: 3.5rem;
+            height: 3.5rem;
+            -webkit-background-size: 0.8rem 1.368rem;
+            background-size: 0.8rem 1.368rem;
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            transition: all 0.4s;
+        }
+        .category-content {
+            display: none;
+            transition: all 0.4s;
+        }
+        .category-content li {
+            float: left;
+            width: 100%;
+            height: 3.4rem;
+            line-height: 3.4rem;
+            padding:0 1.5rem;
+            font-size: 1.2rem;
+            background: #F5F5F5;
+            box-shadow: 0 0 0 0 #DDDDDD;
+            border-bottom: 1px solid #DDDDDD;
+        }
+        .category-content li i {
+            background: url("general_icon_select@2x.png") center no-repeat;
+            float: right;
+            width: 3.4rem;
+            height: 3.4rem;
+            -webkit-background-size: 1.5rem 1.125rem;
+            background-size: 1.5rem 1.125rem;
+        }
+        .category-item.on .category-content {
+            display: block;
+        }
+        .category-item.on .category-title i {
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
     </style>
 </head>
 <body>
-    <section class="draggable-box">
-        <div class="draggable-scoll">
-            <div class="draggable-item">
-                <h2 class="draggable-title">价格区间</h2>
-                <div class="draggable-content clearfix">
-                    <input class="fl" type="text" placeholder="最低价"/>
-                    <span class="fl">—</span>
-                    <input class="fr" type="text" placeholder="最高价"/>
-                </div>
-            </div>
-            <div class="draggable-item">
-                <h2 class="draggable-title">品牌 <span class="fr">全部品牌 ></span></h2>
-                <ul class="draggable-content clearfix"  id="brand-data-box">
-
-                </ul>
-            </div>
-            <div class="draggable-item">
-                <h2 class="draggable-title">类目 <span class="fr">全部类目 ></span></h2>
-                <ul class="draggable-content clearfix"  id="category-data-box">
-
-                </ul>
-            </div>
-            <div class="draggable-item ">
-                <h2 class="draggable-title">使用性别</h2>
-                <ul class="draggable-content clearfix">
-                    <li>男</li>
-                    <li>女</li>
-                    <li>通用</li>
-                </ul>
+<button>筛选</button>
+<section class="draggable-box">
+    <div class="cover"></div>
+    <div class="draggable-scoll">
+        <div class="draggable-item">
+            <h2 class="draggable-title">价格区间</h2>
+            <div class="draggable-content clearfix">
+                <input id="startPrice" class="fl" type="text" placeholder="最低价"/>
+                <span class="fl">—</span>
+                <input id="endPrice" class="fr" type="text" placeholder="最高价"/>
             </div>
         </div>
-        <div class="draggable-footer">
-            <a href="javascript:;">重置</a>
-            <a href="javascript:;" class="submit">确定</a>
+        <div class="draggable-item brand-draggable-item">
+            <h2 class="draggable-title">品牌 <span id="prop" class="fr"></span></h2>
+            <ul class="draggable-content clearfix"  id="brand-data-box">
+                <li class="allClass allBrand">全部品牌 ></li>
+            </ul>
         </div>
-    </section>
-    <script id="brand-data" type="text/html">
-        {{each branIdList as brand i}}
-            <li data-brandId="{{brand.brandId}}">{{brand.brandName}}</li>
-        {{/each}}
-    </script>
-    <script id="category-data" type="text/html">
-        {{each categoryList as category i}}
-            <li data-categoryId="{{category.id}}">{{category.name}}</li>
-        {{/each}}
-    </script>
-    <script src="jquery.min.js"></script>
-    <script src="template.js"></script>
-    <script>
-        $(function () {
-            $.ajax({
-                url:"./data.json",
-                type:"get",
-                success:function(data){
-                    console.log(data);
-                    if(data.resultCode == 1){
-//                        品牌
-                        var brandData = {};
-                        brandData.branIdList = data.branIdList.slice(0,6);
-                        var brandHtml = template('brand-data', brandData);
-                        $('#brand-data-box').append(brandHtml);
-//                        类目
-                        var categoryData = {categoryList:[]};
-                        for(var i=0 ;i<6;i++){
-                            categoryData.categoryList.push(data.categoryList.slice(0,6)[i].childrenList[0]);
-                        }
-                        var categoryHtml = template('category-data', categoryData);
-                        $('#category-data-box').append(categoryHtml);
-                    }else {
-                        alert(data.message);
-                    }
+        <div class="draggable-item category-draggable-item">
+            <h2 class="draggable-title">类目 <span id="categoryId" class="fr"></span></h2>
+            <ul class="draggable-content clearfix"  id="category-data-box">
+                <li class="allClass allCategory">全部类目 ></li>
+            </ul>
+        </div>
+        <div class="draggable-item ">
+            <h2 class="draggable-title">使用性别 <span id="keyword" class="fr"></span></h2>
+            <ul class="draggable-content clearfix">
+                <li>男</li>
+                <li>女</li>
+                <li>通用</li>
+            </ul>
+        </div>
+    </div>
+    <div class="draggable-footer">
+        <a href="javascript:;">重置</a>
+        <a href="javascript:;" class="submit">确定</a>
+    </div>
+</section>
+<section class="draggable-box" id="allCategory-data-box">
+</section>
+<script id="brand-data" type="text/html">
+    {{each branIdList as brand i}}
+    <li data-brandid="{{brand.brandId}}">{{brand.brandName}}</li>
+    {{/each}}
+</script>
+<script id="category-data" type="text/html">
+    {{each categoryList as category i}}
+    <li data-categoryid="{{category.id}}">{{category.name}}</li>
+    {{/each}}
+</script>
+<script id="allCategory-data" type="text/html">
+    <div class="draggable-scoll">
+    {{each categoryList}}
+    <div class="category-item">
+        <h2 class="category-title" data-categoryid="{{$value.id}}">{{$value.name}} <i></i></h2>
+        <ul class="category-content clearfix">
+            {{each $value.childrenList as childrenCategory j}}
+            <li data-categoryid="{{childrenCategory.id}}">{{childrenCategory.name}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+        </div>
+</script>
 
-                },
-                error:function(err){
-                    console.log(err);
-                    alert("网络繁忙！");
-                }
+<script src="jquery.min.js"></script>
+<script src="artTemplate.js"></script>
+<script>
+    $(function () {
+        $("button").on("click", function () {
+//            侧滑
+            $(".draggable-box").eq(0).addClass("active");
+            $(".cover").on("click", function () {
+                $(".draggable-box").removeClass("active");
             })
+//            请求数据
+            if($("#brand-data-box").find("li").size()<2){
+                $.ajax({
+                    url:"./data.json",
+                    type:"get",
+                    success:function(data){
+//                var data = JSON.parse(data)
+                        console.log(data);
+                        if(data.resultCode == 1){
+//                        品牌
+                            var brandData = {};
+                            brandData.branIdList = data.branIdList.slice(0,5);
+                            var brandHtml = template('brand-data', brandData);
+                            $('#brand-data-box').prepend(brandHtml);
+//                        类目
+                            var categoryData = {categoryList:[]};
+                            for(var i=0 ;i<5;i++){
+                                categoryData.categoryList.push(data.categoryList.slice(0,5)[i].childrenList[0]);
+                            }
+                            var categoryHtml = template('category-data', categoryData);
+                            $('#category-data-box').prepend(categoryHtml);
+//                        选取
+                            $(".draggable-item").on("click", function (e) {
+                                if(e.target && e.target.nodeName.toUpperCase() == "LI" && !$(e.target).hasClass("allClass")) {
+                                    if($(e.target).hasClass("checked")){
+                                        $(this).find(".checked").removeClass("checked");
+                                    }else {
+                                        $(this).find(".checked").removeClass("checked");
+                                        $(e.target).addClass("checked");
+                                    }
+                                    $(this).find("span").html($(this).find(".checked").html());
+//                                    存储id
+                                    if(!!$(this).hasClass("category-draggable-item")){
+                                        $(this).find("span").attr("data-categoryid",$(this).find(".checked").data("categoryid"));
+                                    }else if(!!$(this).hasClass("brand-draggable-item")){
+                                        $(this).find("span").attr("data-brandid",$(this).find(".checked").data("brandid"));
+                                    }
+                                }
+//                                全部类目
+                                if(e.target && $(e.target).hasClass("allCategory")) {
+                                    $(".draggable-box").eq(1).addClass("active");
+                                    var allCategoryHtml = template('allCategory-data', data);
+                                    $('#allCategory-data-box').prepend(allCategoryHtml);
+//                                    展开
+                                    $(".category-item").eq(0).addClass("on");
+                                    $(".category-title").on("click", function () {
+                                        if($(this).parent().hasClass("on")){
+                                            $(this).parent().removeClass("on");
+                                        }else {
+                                            $(".on").removeClass("on");
+                                            $(this).parent().addClass("on");
+                                        }
+                                    })
+                                    var $span = $(this).find("span");
+                                    $(".category-content li").on("click", function () {
+                                        $span.attr("data-categoryid",$(this).data("categoryid"));
+                                        $span.html($(this).html());
+                                        $(".draggable-box").eq(1).removeClass("active");
+                                    })
+                                }
+                            });
+
+//                            提交
+                            $(".submit").on("click", function () {
+                                var params = {
+                                    startPrice:$("#startPrice").val(),
+                                    endPrice:$("#endPrice").val(),
+                                    categoryId:$("#categoryId").data("categoryid"),
+                                    prop:$("#prop").data("brandid"),
+                                    keyword:$("#keyword").html()
+                                }
+                                console.log(params);
+                                $(".draggable-box").removeClass("active");
+                            })
+                        }else {
+                            alert(data.message);
+                        }
+
+                    },
+                    error:function(err){
+                        console.log(err);
+                        alert("网络繁忙！");
+                    }
+                })
+            }
+
         })
-    </script>
+
+    })
+</script>
 </body>
 </html>
